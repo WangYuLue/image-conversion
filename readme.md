@@ -12,7 +12,9 @@ gulp
 
 ```js
 var file = document.getElementById('demo').files[0];
-fileResizetoFile(file,0.6,function(res){
+
+imageResizeTool.fileResizetoFile(file,0.6,function(res){
+    //回调中的res是一个压缩后的Blob类型（可以当做File类型看待）文件；
     console.log(res);
     //做出你要上传的操作；
 })
