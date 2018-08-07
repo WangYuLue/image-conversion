@@ -28,8 +28,7 @@
                 var img = document.getElementById("demo");
                 var canvas = imageResizeTool.imagetoCanvas(img);
                 var data = imageResizeTool.canvasResizetoDataURL(canvas,quality);
-                data1 = data;
-                console.log(data);
+                console.log(data.length);
                 imageResizeTool.dataURLtoImage(data,(img)=>{
                     var container = document.getElementById("container");
                     container.innerHTML = '';
