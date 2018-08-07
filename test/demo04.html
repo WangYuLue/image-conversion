@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!-- 压缩图片（方法二） -->
+<html>
+    <head>
+        <title>压缩图片（方法二）</title>
+        <script src="../src/resize.js"></script>
+    </head>
+    <body>
+        <div>
+            <input id="quality" type="text" placeholder="选择压缩比例0~1">
+            <button onclick="resize()">压缩图片</button>
+            <br>
+            <p1>原图</p1>
+            <img id="demo" src="../image/xmind.png">
+            <br>
+            <p1>压缩后图片</p1>
+            <div id="container">
+                
+            </div>
+        </div>
+        <script>
+            function resize () {
+                var quality = Number(document.getElementById("quality").value)
+                if(!quality || quality>1 || quality<0){
+                    alert("压缩比例为0～1");
+                    return;
+                }
+                var img = document.getElementById("demo");
+                var canvas = imageResizeTool.imagetoCanvas(img);
+                var data = imageResizeTool.canvasResizetoDataURL(canvas,quality);
+                data1 = data;
+                console.log(data);
+                imageResizeTool.dataURLtoImage(data,(img)=>{
+                    var container = document.getElementById("container");
+                    container.innerHTML = '';
+                    container.appendChild(img);
+                })
+                   
+            }
+        </script>
+    </body>
+</html>

@@ -72,8 +72,11 @@
 	 * dataurl参数传入一个dataURL字符串
 	 */
 	methods.dataURLtoFile = function(dataurl) {
-		var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-				bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+		var arr = dataurl.split(','), 
+			mime = arr[0].match(/:(.*?);/)[1],
+			bstr = atob(arr[1]), 
+			n = bstr.length, 
+			u8arr = new Uint8Array(n);
 		while(n--){
 			u8arr[n] = bstr.charCodeAt(n);
 		}
@@ -88,7 +91,7 @@
 	 * fn为回调方法，包含一个Blob类型文件的参数
 	 * 使用示例：
 	 * var file = document.getElementById('demo').files[0];
-	 * fileResizetoFile(file,0.6,function(res){
+	 * imageResizeTool.fileResizetoFile(file,0.6,function(res){
 	 *     console.log(res);
 	 *     //做出你要上传的操作；
 	 * })
