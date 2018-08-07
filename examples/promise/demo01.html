@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!-- 预览上传的图片 -->
+<html>
+    <head>
+        <title>预览上传的图片</title>
+        <script src="../../src/resize.promise.js"></script>
+    </head>
+    <body>
+        <div>
+            <input id="demo" type="file" onchange="view()">
+            <br>
+            <div id="container"></div>
+        </div>
+        <script>
+            function view () {
+                var file = document.getElementById('demo').files[0];
+                imageResizeTool.filetoDataURL(file)
+                    .then(data => imageResizeTool.dataURLtoImage(data))
+                    .then(img => {
+                        var container = document.getElementById("container");
+                        container.innerHTML = '';
+                        container.appendChild(img);
+                    })
+            }
+
+             
+        </script>
+    </body>
+</html>

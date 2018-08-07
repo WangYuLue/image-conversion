@@ -2,8 +2,8 @@
 <!-- 压缩图片（方法二） -->
 <html>
     <head>
-        <title>压缩图片（方法二）</title>
-        <script src="../src/resize.js"></script>
+        <title>测试 dataURLtoFile 方法</title>
+        <script src="../../src/resize.common.js"></script>
     </head>
     <body>
         <div>
@@ -11,12 +11,10 @@
             <button onclick="resize()">压缩图片</button>
             <br>
             <p1>原图</p1>
-            <img id="demo" src="../image/xmind.png">
+            <img id="demo" src="../../image/xmind.png">
             <br>
             <p1>压缩后图片</p1>
-            <div id="container">
-                
-            </div>
+            <div id="container"></div>
         </div>
         <script>
             function resize () {
@@ -29,12 +27,15 @@
                 var canvas = imageResizeTool.imagetoCanvas(img);
                 var data = imageResizeTool.canvasResizetoDataURL(canvas,quality);
                 console.log(data.length);
-                imageResizeTool.dataURLtoImage(data,(img)=>{
-                    var container = document.getElementById("container");
-                    container.innerHTML = '';
-                    container.appendChild(img);
+                var file = imageResizeTool.dataURLtoFile(data);
+                imageResizeTool.filetoDataURL(file,(data)=>{
+                    console.log(data.length);
+                    imageResizeTool.dataURLtoImage(data,(img)=>{
+                        var container = document.getElementById("container");
+                        container.innerHTML = '';
+                        container.appendChild(img);
+                    })
                 })
-                   
             }
         </script>
     </body>

@@ -1,8 +1,10 @@
 var gulp = require('gulp'),
-uglify = require('gulp-uglify');
+    babel = require("gulp-babel"), 
+    uglify = require('gulp-uglify');
 
 gulp.task('default', function () {
-gulp.src('src/resize.js')
+gulp.src('src/*.js')
+    .pipe(babel()) 
     .pipe(uglify())
     .pipe(gulp.dest('build'))
 });
