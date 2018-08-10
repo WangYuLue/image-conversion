@@ -13,7 +13,7 @@ npm run compress
 
 ## Seven methods in tools
 
-![Alt text](./image/xmind.png?raw=true)
+![Alt text](https://github.com/WangYuLue/image-resize-tools/raw/master/image/xmind.png?raw=true)
 
 ## Include the library
 
@@ -66,6 +66,7 @@ in the browser, we change the script:
 ```html
 <script src="http://www.wangyulue.com/assets/js/image_resize_tools/resize.promise.js"></script>
 ```
+in the node, we default use promise.
 
 use like this:
 
