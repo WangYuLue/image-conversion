@@ -1,6 +1,6 @@
 {
   "name": "image-resize-tools",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "简单的易用的js压缩图片方法",
   "main": "index.js",
   "scripts": {
