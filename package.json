@@ -8,6 +8,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "wangyulue",
+  "keywords": [
+    "image",
+    "resize",
+    "compress"
+  ],
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.3",
