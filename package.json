@@ -4,10 +4,11 @@
   "description": "简单的易用的js压缩图片方法",
   "main": "index.js",
   "scripts": {
+    "compress": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "wangyulue",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-es2015": "^6.24.1",

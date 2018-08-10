@@ -24,13 +24,13 @@
                     return;
                 }
                 var img = document.getElementById("demo");
-                var canvas = imageResizeTool.imagetoCanvas(img);
-                var data = imageResizeTool.canvasResizetoDataURL(canvas,quality);
+                var canvas = imageResizeTools.imagetoCanvas(img);
+                var data = imageResizeTools.canvasResizetoDataURL(canvas,quality);
                 console.log(data.length);
-                var file = imageResizeTool.dataURLtoFile(data);
-                imageResizeTool.filetoDataURL(file,(data)=>{
+                var file = imageResizeTools.dataURLtoFile(data);
+                imageResizeTools.filetoDataURL(file,(data)=>{
                     console.log(data.length);
-                    imageResizeTool.dataURLtoImage(data,(img)=>{
+                    imageResizeTools.dataURLtoImage(data,(img)=>{
                         var container = document.getElementById("container");
                         container.innerHTML = '';
                         container.appendChild(img);

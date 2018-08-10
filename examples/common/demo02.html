@@ -16,7 +16,7 @@
         <script>
             function view () {
                 var file = document.getElementById('demo').files[0];
-                imageResizeTool.filetoDataURL(file,(data)=>{
+                imageResizeTools.filetoDataURL(file,(data)=>{
                     document.getElementsByTagName("img")[0].src = data;
                 })
             }

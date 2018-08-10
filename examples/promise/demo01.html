@@ -14,8 +14,8 @@
         <script>
             function view () {
                 var file = document.getElementById('demo').files[0];
-                imageResizeTool.filetoDataURL(file)
-                    .then(data => imageResizeTool.dataURLtoImage(data))
+                imageResizeTools.filetoDataURL(file)
+                    .then(data => imageResizeTools.dataURLtoImage(data))
                     .then(img => {
                         var container = document.getElementById("container");
                         container.innerHTML = '';

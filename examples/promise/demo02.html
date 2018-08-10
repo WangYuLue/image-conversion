@@ -24,11 +24,11 @@
                     return;
                 }
                 var img = document.getElementById("demo");
-                imageResizeTool.imagetoCanvas(img)
-                    .then(canvas => imageResizeTool.canvasResizetoDataURL(canvas,quality))
-                    .then(data => imageResizeTool.dataURLtoFile(data))
-                    .then(file => imageResizeTool.filetoDataURL(file))
-                    .then(data => imageResizeTool.dataURLtoImage(data))
+                imageResizeTools.imagetoCanvas(img)
+                    .then(canvas => imageResizeTools.canvasResizetoDataURL(canvas,quality))
+                    .then(data => imageResizeTools.dataURLtoFile(data))
+                    .then(file => imageResizeTools.filetoDataURL(file))
+                    .then(data => imageResizeTools.dataURLtoImage(data))
                     .then(img => {
                         var container = document.getElementById("container");
                         container.innerHTML = '';
