@@ -1,4 +1,9 @@
-!(function imageResizeTool (root) {
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.imageResizeTool = factory());
+}(this, (function () { 'use strict';
+
 	var methods = {} ;
 
 	methods.urltoImage = function (url) {
@@ -78,5 +83,5 @@
             .then(file => fn(file))
     };
 
-	root.imageResizeTool = methods ;
-}(this))
+	return methods ;
+})));

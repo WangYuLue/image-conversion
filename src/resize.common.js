@@ -1,4 +1,9 @@
-!(function imageResizeTool (root) {
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.imageResizeTool = factory());
+}(this, (function () { 'use strict';
+
 	var methods = {} ;
 
 	/* 通过一个图片的url加载所需要的图片对象
@@ -104,5 +109,5 @@
 		})
 	};
 
-	root.imageResizeTool = methods ;
-}(this))
+	return methods ;
+})));
