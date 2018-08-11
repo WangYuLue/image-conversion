@@ -81,6 +81,17 @@ imageResizeTools.imagetoCanvas(img)
 })
 ```
 
+or like this:
+
+```js
+const canvas = await imageResizeTools.imagetoCanvas(img);
+const dataURL = await imageResizeTools.canvasResizetoDataURL(canvas,quality);
+const file = await imageResizeTools.dataURLtoFile(dataURL);
+const data = await imageResizeTools.filetoDataURL(file);
+const image = await imageResizeTools.dataURLtoImage(data);
+//do something
+```
+
 ## Description document
 
 [王玉略的个人网站](http://www.wangyulue.com/2017/11/13/JS%E4%B8%AD%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E7%9A%84%E4%B8%80%E8%88%AC%E6%96%B9%E6%B3%95/#more)
