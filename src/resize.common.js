@@ -1,12 +1,12 @@
 /**
- * @file Describe the file
+ * @file A simple and easy-to-use JS image compression, tools
  * @author wangyulue(wangyulue@gmail.com)
  */
 
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 		typeof define === 'function' && define.amd ? define(factory) :
-		(global.imageResizeTools = factory());
+		(global.imageConversion = factory());
 }(this, (function () {
 	'use strict';
 
@@ -15,11 +15,11 @@
 	/**
 	 * 通过一个图片的url加载所需要的image对象
 	 *
-	 * @param {string} url 图片URL
-	 * @param {requestCallback} fn fn为回调函数，包含一个image对象
+	 * @param {string} url - 图片URL
+	 * @param {requestCallback} fn - 回调函数，包含一个image对象
 	 *
 	 * @callback requestCallback
-	 * @param {image} image image对象
+	 * @param {image} image
 	 */
 	methods.urltoImage = function (url, fn) {
 		const img = new Image();
@@ -32,8 +32,8 @@
 	/**
 	 * 通过一个图片的url加载所需要的File（Blob）对象
 	 *
-	 * @param {string} url 图片URL
-	 * @param {requestCallback} fn fn为回调函数，包含一个File（Blob）对象
+	 * @param {string} url - 图片URL
+	 * @param {requestCallback} fn - 回调函数，包含一个File（Blob）对象
 	 *
 	 * @callback requestCallback
 	 * @param {Blob} file
@@ -52,11 +52,21 @@
 	 *
 	 * @param {image} image
 	 *
-	 * @typedef {Object} config 转变为canvas时的一些参数配置
-	 * 		@param {number} width canvas图像的宽度，默认为image的宽度
-	 * 		@param {number} height canvas图像的高度，默认为image的高度
-	 * 		@param {number} scale 相对于image的缩放比例，默认不缩放；
+	 * @typedef {Object} config - 转变为canvas时的一些参数配置
+	 * 		@param {number} width - canvas图像的宽度，默认为image的宽度
+	 * 		@param {number} height - canvas图像的高度，默认为image的高度
+	 * 		@param {number} scale - 相对于image的缩放比例，默认不缩放；
 	 * 			设置config.scale后会覆盖config.width和config.height的设置；
+	 * 		@param {number} orientation - 图片旋转参数，默认不旋转，参考如下：
+	 * 			参数	 旋转方向
+	 * 			1		0°
+	 * 			2		水平翻转
+	 * 			3		180°
+	 * 			4		垂直翻转
+	 * 			5		顺时针90°+水平翻转
+	 * 			6		顺时针90°
+	 * 			7		顺时针90°+垂直翻转
+	 * 			8		逆时针90°
 	 * @type {config}
 	 *
 	 * @returns {canvas}
@@ -130,8 +140,8 @@
 	 * 该方法可以做压缩处理
 	 *
 	 * @param {canvas} canvas
-	 * @param {number} quality 传入范围 0-1，表示图片压缩质量
-	 * @param {requestCallback} fn fn为回调函数，包含一个File（Blob）对象
+	 * @param {number} quality - 传入范围 0-1，表示图片压缩质量
+	 * @param {requestCallback} fn - 回调函数，包含一个File（Blob）对象
 	 *
 	 * @callback requestCallback
 	 * @param {Blob} file
@@ -147,7 +157,7 @@
 	 * 该方法可以做压缩处理
 	 *
 	 * @param {canvas} canvas
-	 * @param {number} quality 传入范围 0-1，表示图片压缩质量
+	 * @param {number} quality - 传入范围 0-1，表示图片压缩质量
 	 * @returns {srting} 返回一个dataURL字符串
 	 */
 	methods.canvasResizetoDataURL = function (canvas, quality) {
@@ -160,10 +170,10 @@
 	 * 将File（Blob）对象转变为一个dataURL字符串
 	 *
 	 * @param {Blob} file
-	 * @param {requestCallback} fn fn为回调函数，包含一个dataURL字符串
+	 * @param {requestCallback} fn - 回调函数，包含一个dataURL字符串
 	 *
 	 * @callback requestCallback
-	 * @param {string} dataURL dataURL字符串
+	 * @param {string} dataURL - dataURL字符串
 	 */
 	methods.filetoDataURL = function (file, fn) {
 		const reader = new FileReader();
@@ -176,11 +186,11 @@
 	/**
 	 * 将dataURL字符串转变为image对象
 	 *
-	 * @param {srting} dataURL dataURL字符串
-	 * @param {requestCallback} fn fn为回调函数，包含一个image对象
+	 * @param {srting} dataURL - dataURL字符串
+	 * @param {requestCallback} fn - 回调函数，包含一个image对象
 	 *
 	 * @callback requestCallback
-	 * @param {image} image image对象
+	 * @param {image} image
 	 */
 	methods.dataURLtoImage = function (dataURL, fn) {
 		const img = new Image();
@@ -195,7 +205,7 @@
 	 * 转变时可以确定File对象的类型
 	 *
 	 * @param {string} dataURL
-	 * @param {string} type type参数确定转换后的图片类型，选项有 "image/png", "image/jpeg", "image/gif"
+	 * @param {string} type - 确定转换后的图片类型，选项有 "image/png", "image/jpeg", "image/gif"
 	 */
 	methods.dataURLtoFile = function (dataURL, type) {
 		let arr = dataURL.split(','),
@@ -214,8 +224,8 @@
 	/**
 	 * 将图片下载到本地
 	 *
-	 * @param {Blob} file 一个File（Blob）对象
-	 * @param {string=} fileName 下载后的文件名（可选参数，不传以时间戳命名文件）
+	 * @param {Blob} file - 一个File（Blob）对象
+	 * @param {string=} fileName - 下载后的文件名（可选参数，不传以时间戳命名文件）
 	 */
 	methods.downloadFile = function (file, fileName) {
 		const link = document.createElement('a');
@@ -232,9 +242,9 @@
 
 	/**
 	 * 压缩File（Blob）对象
-	 * @param {Blob} file 一个File（Blob）对象
-	 * @param {number} quality 传入范围 0-1，表示图片压缩质量
-	 * @param {requestCallback} fn fn为回调函数，包含一个压缩后的File（Blob）对象
+	 * @param {Blob} file - 一个File（Blob）对象
+	 * @param {number} quality - 传入范围 0-1，表示图片压缩质量
+	 * @param {requestCallback} fn - 回调函数，包含一个压缩后的File（Blob）对象
 	 *
 	 * @callback requestCallback
 	 * @param {Blob} file
