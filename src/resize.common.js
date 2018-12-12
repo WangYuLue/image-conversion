@@ -55,7 +55,7 @@
 	 * @typedef {Object} config - 转变为canvas时的一些参数配置
 	 * 		@param {number} width - canvas图像的宽度，默认为image的宽度
 	 * 		@param {number} height - canvas图像的高度，默认为image的高度
-	 * 		@param {number} scale - 相对于image的缩放比例，默认不缩放；
+	 * 		@param {number} scale - 相对于image的缩放比例，范围0-10，默认不缩放；
 	 * 			设置config.scale后会覆盖config.width和config.height的设置；
 	 * 		@param {number} orientation - 图片旋转参数，默认不旋转，参考如下：
 	 * 			参数	 旋转方向
@@ -80,8 +80,10 @@
 			width = config.width || image.width;
 			height = config.height || image.height;
 		} else {
-			width = image.width * config.scale;
-			height = image.height * config.scale;
+			// 缩放比例0-10，不在此范围则保持原来图像大小
+			const scale = config.scale > 0 && config.scale < 10 ? config.scale : 1;
+			width = image.width * scale;
+			height = image.height * scale;
 		}
 		//当顺时针或者逆时针旋转90时，需要交换canvas的宽高
 		if ([5, 6, 7, 8].some(i => i === config.orientation)) {
@@ -161,9 +163,7 @@
 	 * @returns {srting} 返回一个dataURL字符串
 	 */
 	methods.canvasResizetoDataURL = function (canvas, quality) {
-		return canvas.toDataURL({
-			type: 'image/jpeg'
-		}, quality);
+		return canvas.toDataURL('image/jpeg', quality);
 	};
 
 	/**
@@ -243,23 +243,131 @@
 	/**
 	 * 压缩File（Blob）对象
 	 * @param {Blob} file - 一个File（Blob）对象
-	 * @param {number} quality - 传入范围 0-1，表示图片压缩质量
+	 * @param {number,object} config - 如果传入是number类型，传入范围 0-1，表示图片压缩质量；
+	 * 								   如果传入是object类型，则config里的参数会用于imagetoCanvas方法里；
+	 * @example
+	 * 		imageConversion.fileResizetoFile(file,0.8,fn);
+	 *
+	 * 		imageConversion.fileResizetoFile(file,{
+	 * 			quality: 0.8, //图片压缩质量
+	 * 			width: 300, //生成图片的宽度
+	 * 			height：200， //生产图片的高度
+	 * 			scale: 0.5， //相对于原始图片的缩放比率,设置config.scale后会覆盖config.width和config.height的设置；
+	 * 			orientation:2, //图片旋转方向
+	 * 		},fn);
+	 *
 	 * @param {requestCallback} fn - 回调函数，包含一个压缩后的File（Blob）对象
 	 *
 	 * @callback requestCallback
 	 * @param {Blob} file
 	 */
-	methods.fileResizetoFile = function (file, quality, fn) {
+	methods.fileResizetoFile = function (file, config, fn) {
+		if (!(file instanceof Blob)) {
+			throw new Error("fileResizetoFile(): First arg must be a Blob object or a File object.");
+		}
 		methods.filetoDataURL(file, function (dataURL) {
-			const mime = dataURL.split(',')[0].match(/:(.*?);/)[1];
+			const mime = dataURL.split(',')[0].match(/:(.*?);/)[1]; //原始图像图片类型
 			methods.dataURLtoImage(dataURL, function (image) {
-				const canvas = methods.imagetoCanvas(image);
-				const dataURL = methods.canvasResizetoDataURL(canvas, quality);
+				if (typeof config === 'number') {
+					config = {
+						quality: config
+					}
+				}
+				const canvas = methods.imagetoCanvas(image, config);
+				const dataURL = methods.canvasResizetoDataURL(canvas, config.quality);
 				const file = methods.dataURLtoFile(dataURL, mime);
 				fn && fn(file);
 			})
 		})
 	};
+
+	/**
+	 * 根据体积压缩File（Blob）对象
+	 * 此方法可能会消耗较多性能
+	 *
+	 * @param {Blob} file - 一个File（Blob）对象
+	 * @param {Object} config - 压缩图片时的一些配置参数
+	 * 		@param {number} size - 指定压缩图片的体积,单位Kb
+	 * 		@param {number} accuracy - 相对于指定压缩体积的精确度，范围0.6-0.99，默认0.95；
+	 * 						  如果设置 图片体积1000Kb,精确度0.95，则压缩结果为950Kb-1050Kb的图片都算合格；
+	 *
+	 * @param {requestCallback} fn - 回调函数，包含一个压缩后的File（Blob）对象
+	 *
+	 * @callback requestCallback
+	 * @param {Blob} file
+	 */
+	methods.fileAccurateResizetoFile = function (file, config = {}, fn) {
+		if (!(file instanceof Blob)) {
+			throw new Error("fileAccurateResizetoFile(): First arg must be a Blob object or a File object.");
+		}
+		config = Object.assign({accuracy:0.95},config); // 默认精度0.95
+		methods.filetoDataURL(file, function (dataURL) {
+			const mime = dataURL.split(',')[0].match(/:(.*?);/)[1]; //原始图像图片类型
+			const resultSize = {
+				max:config.size*(2-config.accuracy)*1024,
+				accurate:config.size*1024,
+				min:config.size*config.accuracy*1024,
+			}
+			const originalSize = file.size;
+			console.log("原始图像尺寸：",originalSize); //原始图像尺寸
+			console.log('目标尺寸：',config.size*1024);
+			console.log('目标尺寸max：',resultSize.max);
+			console.log('目标尺寸min：',resultSize.min);
+			methods.dataURLtoImage(dataURL, function (image) {
+				const canvas = methods.imagetoCanvas(image, config);
+				/**
+				 * 经过测试发现，blob.size与dataURL.length的比值约等于0.75
+				 * 这个比值可以同过dataURLtoFile这个方法来测试验证
+				 * 这里为了提高性能，直接通过这个比值来计算出blob.size
+				 */
+				const proportion = 0.75;
+				let imageQuality = 0.5;
+				let dataURL;
+				let tempDataURLs=[null,null];
+				/**
+				 * HTMLCanvasElement.toBlob()以及HTMLCanvasElement.toDataURL()压缩参数
+				 * 的最小细粒度为0.01，而2的7次方为128，即只要循环7次，则会覆盖所有可能性
+				 */
+				for (let x=1;x<=7;x++){
+					console.group();
+					console.log("循环次数：",x);
+					console.log("当前图片质量",imageQuality);
+
+					dataURL = methods.canvasResizetoDataURL(canvas,imageQuality);
+					const CalculationSize = dataURL.length*proportion;
+
+					//如果到循环第七次还没有达到精确度的值，那说明该图片达不到到此精确度要求
+					//这时候最后一次循环出来的dataURL可能不是最精确的，需要取其周边两个dataURL三者比较来选出最精确的；
+					if(x===7){
+						if(resultSize.max<CalculationSize || resultSize.min>CalculationSize){
+							dataURL = [dataURL,...tempDataURLs].sort((a,b)=>
+								Math.max(b.length*proportion-resultSize.accurate)-
+								Math.max(a.length*proportion-resultSize.accurate)
+							)[0];
+						}
+						break;
+					}
+					console.log("当前图片尺寸",CalculationSize);
+					console.log("当前压缩率",CalculationSize/originalSize);
+					console.log("与目标体积偏差",CalculationSize/(config.size*1024)-1);
+					console.groupEnd();
+
+					if(resultSize.max<CalculationSize){
+						tempDataURLs[1] = dataURL;
+						imageQuality-=Math.pow(0.5,x+1)
+					}else if(resultSize.min>CalculationSize){
+						tempDataURLs[0] = dataURL;
+						imageQuality+=Math.pow(0.5,x+1)
+					}else{
+						break;
+					}
+				}
+				const file = methods.dataURLtoFile(dataURL, mime);
+				console.log("最终图片大小：",file.size);
+				fn && fn(file);
+			})
+		})
+	}
 
 	return methods;
 })));
