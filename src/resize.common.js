@@ -300,19 +300,21 @@
 		if (!(file instanceof Blob)) {
 			throw new Error("fileAccurateResizetoFile(): First arg must be a Blob object or a File object.");
 		}
-		config = Object.assign({accuracy:0.95},config); // 默认精度0.95
+		config = Object.assign({
+			accuracy: 0.95
+		}, config); // 默认精度0.95
 		methods.filetoDataURL(file, function (dataURL) {
 			const mime = dataURL.split(',')[0].match(/:(.*?);/)[1]; //原始图像图片类型
 			const resultSize = {
-				max:config.size*(2-config.accuracy)*1024,
-				accurate:config.size*1024,
-				min:config.size*config.accuracy*1024,
+				max: config.size * (2 - config.accuracy) * 1024,
+				accurate: config.size * 1024,
+				min: config.size * config.accuracy * 1024,
 			}
 			const originalSize = file.size;
-			console.log("原始图像尺寸：",originalSize); //原始图像尺寸
-			console.log('目标尺寸：',config.size*1024);
-			console.log('目标尺寸max：',resultSize.max);
-			console.log('目标尺寸min：',resultSize.min);
+			console.log('原始图像尺寸：', originalSize); //原始图像尺寸
+			console.log('目标尺寸：', config.size * 1024);
+			console.log('目标尺寸max：', resultSize.max);
+			console.log('目标尺寸min：', resultSize.min);
 			methods.dataURLtoImage(dataURL, function (image) {
 				const canvas = methods.imagetoCanvas(image, config);
 				/**
@@ -323,47 +325,47 @@
 				const proportion = 0.75;
 				let imageQuality = 0.5;
 				let dataURL;
-				let tempDataURLs=[null,null];
+				let tempDataURLs = [null, null];
 				/**
 				 * HTMLCanvasElement.toBlob()以及HTMLCanvasElement.toDataURL()压缩参数
 				 * 的最小细粒度为0.01，而2的7次方为128，即只要循环7次，则会覆盖所有可能性
 				 */
-				for (let x=1;x<=7;x++){
+				for (let x = 1; x <= 7; x++) {
 					console.group();
-					console.log("循环次数：",x);
-					console.log("当前图片质量",imageQuality);
+					console.log("循环次数：", x);
+					console.log("当前图片质量", imageQuality);
 
-					dataURL = methods.canvasResizetoDataURL(canvas,imageQuality);
-					const CalculationSize = dataURL.length*proportion;
+					dataURL = methods.canvasResizetoDataURL(canvas, imageQuality);
+					const CalculationSize = dataURL.length * proportion;
 
-					//如果到循环第七次还没有达到精确度的值，那说明该图片达不到到此精确度要求
+					//如果到循环第七次还没有达到精确度的值，那说明该图片不能达到到此精确度要求
 					//这时候最后一次循环出来的dataURL可能不是最精确的，需要取其周边两个dataURL三者比较来选出最精确的；
-					if(x===7){
-						if(resultSize.max<CalculationSize || resultSize.min>CalculationSize){
-							dataURL = [dataURL,...tempDataURLs].sort((a,b)=>
-								Math.max(b.length*proportion-resultSize.accurate)-
-								Math.max(a.length*proportion-resultSize.accurate)
+					if (x === 7) {
+						if (resultSize.max < CalculationSize || resultSize.min > CalculationSize) {
+							dataURL = [dataURL, ...tempDataURLs].sort((a, b) =>
+								Math.max(b.length * proportion - resultSize.accurate) -
+								Math.max(a.length * proportion - resultSize.accurate)
 							)[0];
 						}
 						break;
 					}
-					console.log("当前图片尺寸",CalculationSize);
-					console.log("当前压缩率",CalculationSize/originalSize);
-					console.log("与目标体积偏差",CalculationSize/(config.size*1024)-1);
+					console.log("当前图片尺寸", CalculationSize);
+					console.log("当前压缩率", CalculationSize / originalSize);
+					console.log("与目标体积偏差", CalculationSize / (config.size * 1024) - 1);
 					console.groupEnd();
 
-					if(resultSize.max<CalculationSize){
+					if (resultSize.max < CalculationSize) {
 						tempDataURLs[1] = dataURL;
-						imageQuality-=Math.pow(0.5,x+1)
-					}else if(resultSize.min>CalculationSize){
+						imageQuality -= Math.pow(0.5, x + 1)
+					} else if (resultSize.min > CalculationSize) {
 						tempDataURLs[0] = dataURL;
-						imageQuality+=Math.pow(0.5,x+1)
-					}else{
+						imageQuality += Math.pow(0.5, x + 1)
+					} else {
 						break;
 					}
 				}
 				const file = methods.dataURLtoFile(dataURL, mime);
-				console.log("最终图片大小：",file.size);
+				console.log("最终图片大小：", file.size);
 				fn && fn(file);
 			})
 		})
