@@ -16,7 +16,7 @@
      * 通过一个图片的url加载所需要的image对象
      *
      * @param {string} url - 图片URL
-     * @returns {Promise {<resolved>: Image}}
+     * @returns {Promise(Image)}
      */
     methods.urltoImage = function (url) {
         return new Promise((resolve, reject) => {
@@ -30,7 +30,7 @@
      * 通过一个图片的url加载所需要的File（Blob）对象
      *
      * @param {string} url - 图片URL
-     * @returns {Promise {<resolved>: Blob}}
+     * @returns {Promise(Blob)}
      *
      */
     methods.urltoBlob = function (url) {
@@ -61,7 +61,7 @@
      * 			8		逆时针90°
      * @type {config}
      *
-     * @returns {Promise {<resolved>: canvas}}
+     * @returns {Promise(canvas)}
      */
     methods.imagetoCanvas = async function (image, config = {}) {
         const cvs = document.createElement("canvas");
@@ -135,7 +135,7 @@
      *
      * @param {canvas} canvas
      * @param {number=} quality - 传入范围 0-1，表示图片压缩质量，默认0.92
-     * @returns {Promise {<resolved>: Blob}}
+     * @returns {Promise(Blob)}
      */
     methods.canvastoFile = function (canvas, quality) {
         return new Promise(resolve =>
@@ -148,8 +148,8 @@
      * 该方法可以做压缩处理
      *
      * @param {canvas} canvas
-     * @param {number} quality - 传入范围 0-1，表示图片压缩质量，默认0.92
-     * @returns {Promise {<resolved>: String}} Promise含有一个dataURL字符串参数
+     * @param {number=} quality - 传入范围 0-1，表示图片压缩质量，默认0.92
+     * @returns {Promise(string)} Promise含有一个dataURL字符串参数
      */
     methods.canvastoDataURL = async function (canvas, quality) {
         return canvas.toDataURL('image/jpeg', quality);
@@ -159,7 +159,7 @@
      * 将File（Blob）对象转变为一个dataURL字符串
      *
      * @param {Blob} file
-     * @returns {Promise {<resolved>: String}} Promise含有一个dataURL字符串参数
+     * @returns {Promise(string)} Promise含有一个dataURL字符串参数
      */
     methods.filetoDataURL = function (file) {
         return new Promise((resolve) => {
@@ -173,7 +173,7 @@
      * 将dataURL字符串转变为image对象
      *
      * @param {srting} dataURL - dataURL字符串
-     * @returns {Promise {<resolved>: Image}}
+     * @returns {Promise(Image)}
      */
     methods.dataURLtoImage = function (dataURL) {
         return new Promise((resolve,reject) => {
@@ -190,7 +190,7 @@
      *
      * @param {string} dataURL
      * @param {string=} type - 确定转换后的图片类型，选项有 "image/png", "image/jpeg", "image/gif"
-     * @returns {Promise {<resolved>: Blob}}
+     * @returns {Promise(Blob)}
      */
     methods.dataURLtoFile = async function (dataURL, type) {
         let arr = dataURL.split(','),
@@ -228,7 +228,7 @@
     /**
      * 压缩File（Blob）对象
      * @param {Blob} file - 一个File（Blob）对象
-     * @param {number,object} config - 如果传入是number类型，传入范围 0-1，表示图片压缩质量,默认0.92；
+     * @param {(number|object)} config - 如果传入是number类型，传入范围 0-1，表示图片压缩质量,默认0.92；
      * 								   也可以传入object类型，以便更详细的配置
      * @example
      * 		imageConversion.compress(file,0.8)
@@ -241,7 +241,7 @@
      * 			orientation:2, //图片旋转方向
      * 		})
      *
-     * @returns {Promise {<resolved>: Blob}}
+     * @returns {Promise(Blob)}
      */
     methods.compress = async function (file, config={}) {
         if (!(file instanceof Blob)) {
@@ -261,14 +261,13 @@
 
     /**
      * 根据体积压缩File（Blob）对象
-     * 此方法可能会消耗较多性能
      *
      * @param {Blob} file - 一个File（Blob）对象
-     * @param {number,object} config - 如果传入是number类型，则指定压缩图片的体积,单位Kb
+     * @param {(number|object)} config - 如果传入是number类型，则指定压缩图片的体积,单位Kb
      * 								   也可以传入object类型，以便更详细的配置
      * 		@param {number} size - 指定压缩图片的体积,单位Kb
-     * 		@param {number} accuracy - 相对于指定压缩体积的精确度，范围0.6-0.99，默认0.95；
-     * 						  如果设置 图片体积1000Kb,精确度0.95，则压缩结果为950Kb-1050Kb的图片都算合格；
+     * 		@param {number} accuracy - 相对于指定压缩体积的精确度，范围0.8-0.99，默认0.95；
+     * 						  如果设置 图片体积1000Kb,精确度0.9，则压缩结果为900Kb-1100Kb的图片都算合格；
      * @example
      *  	imageConversion.compress(file,100) 压缩后图片大小为100kb
      *
@@ -276,12 +275,12 @@
      * 			size: 100, //图片压缩体积，单位Kb
      *          accuracy: 0.9 //图片压缩体积的精确度，默认0.95
      * 			width: 300, //生成图片的宽度
-     * 			height：200， //生产图片的高度
-     * 			scale: 0.5， //相对于原始图片的缩放比率,设置config.scale后会覆盖config.width和config.height的设置；
+     * 			height: 200, //生产图片的高度
+     * 			scale: 0.5, //相对于原始图片的缩放比率,设置config.scale后会覆盖config.width和config.height的设置；
      * 			orientation:2, //图片旋转方向
      * 		})
      *
-     * @returns {Promise {<resolved>: Blob}}
+     * @returns {Promise(Blob)}
      */
     methods.compressAccurately = async function (file, config = {}) {
         if (!(file instanceof Blob)) {
@@ -290,7 +289,13 @@
         if (typeof config === 'number') {
             config = Object.assign({size: config}) ;
         }
-        config = Object.assign({accuracy: 0.95}, config) ;// 默认精度0.95
+        //如果指定体积大于原文件体积，则不做处理；
+        if (config.size * 1024> file.size) {
+            return file;
+        }
+        if (!config.accuracy || typeof config.accuracy !==number || config.accuracy<0.8 || config.accuracy>0.99){
+            config.accuracy = 0.95; // 默认精度0.95
+        }
         const resultSize = {
             max: config.size * (2 - config.accuracy) * 1024,
             accurate: config.size * 1024,

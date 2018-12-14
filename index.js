@@ -1,1 +1,1 @@
-module.exports = require("./build/resize.promise.js");
+module.exports = require("./build/conversion.js");
