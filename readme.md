@@ -1,6 +1,6 @@
 # image-conversion
 
-> image-conversion is a simple and easy-to-use JS image convert tools,which provides many methods to convert between Image,Canvas,File and dataURL.
+> image-conversion is a simple and easy-to-use JS image convert tools, which provides many methods to convert between Image,Canvas,File and dataURL.
 
 > In addition，image-conversion can specify size to compress the image.
 

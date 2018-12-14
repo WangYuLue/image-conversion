@@ -303,11 +303,11 @@
         }
         const dataURL = await methods.filetoDataURL(file);
         const mime = dataURL.split(',')[0].match(/:(.*?);/)[1]; //原始图像图片类型
-        const originalSize = file.size;
-        console.log('原始图像尺寸：', originalSize); //原始图像尺寸
-        console.log('目标尺寸：', config.size * 1024);
-        console.log('目标尺寸max：', resultSize.max);
-        console.log('目标尺寸min：', resultSize.min);
+        // const originalSize = file.size;
+        // console.log('原始图像尺寸：', originalSize); //原始图像尺寸
+        // console.log('目标尺寸：', config.size * 1024);
+        // console.log('目标尺寸max：', resultSize.max);
+        // console.log('目标尺寸min：', resultSize.min);
         const image = await methods.dataURLtoImage(dataURL);
         const canvas = await methods.imagetoCanvas(image, config);
         /**
@@ -324,15 +324,15 @@
          * 的最小细粒度为0.01，而2的7次方为128，即只要循环7次，则会覆盖所有可能性
          */
         for (let x = 1; x <= 7; x++) {
-            console.group();
-            console.log("循环次数：", x);
-            console.log("当前图片质量", imageQuality);
+            // console.group();
+            // console.log("循环次数：", x);
+            // console.log("当前图片质量", imageQuality);
             compressDataURL = await methods.canvastoDataURL(canvas, imageQuality);
             const CalculationSize = compressDataURL.length * proportion;
-            console.log("当前图片尺寸", CalculationSize);
-            console.log("当前压缩率", CalculationSize / originalSize);
-            console.log("与目标体积偏差", CalculationSize / (config.size * 1024) - 1);
-            console.groupEnd();
+            // console.log("当前图片尺寸", CalculationSize);
+            // console.log("当前压缩率", CalculationSize / originalSize);
+            // console.log("与目标体积偏差", CalculationSize / (config.size * 1024) - 1);
+            // console.groupEnd();
             //如果到循环第七次还没有达到精确度的值，那说明该图片不能达到到此精确度要求
             //这时候最后一次循环出来的dataURL可能不是最精确的，需要取其周边两个dataURL三者比较来选出最精确的；
             if (x === 7) {
@@ -355,7 +355,7 @@
             }
         }
         const compressFile = await methods.dataURLtoFile(compressDataURL, mime);
-        console.log("最终图片大小：", compressFile.size);
+        // console.log("最终图片大小：", compressFile.size);
         return compressFile;
     }
     return methods;
