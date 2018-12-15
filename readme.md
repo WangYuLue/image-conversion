@@ -45,6 +45,14 @@ function view(){
         })
     })
 }
+
+// or use an async function
+async function view() {
+    const file = document.getElementById('demo').files[0];
+    console.log(file);
+    const res = await imageConversion.compressAccurately(file,200)
+    console.log(res);
+}
 ```
 
 2. Compress images at a quality of 0.9
