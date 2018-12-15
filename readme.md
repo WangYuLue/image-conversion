@@ -7,7 +7,7 @@
 
 ## Methods Map
 
-![Alt text](./image/xmind.png?raw=true)
+![Alt text](https://raw.githubusercontent.com/WangYuLue/image-conversion/master/image/xmind.png)
 
 ## Getting started
 
