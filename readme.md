@@ -36,7 +36,7 @@ const imageConversion = require("image-conversion")
 1. Compress image to 200kb:
 ```js
 function view(){
-    var file = document.getElementById('demo').files[0];
+    const file = document.getElementById('demo').files[0];
     console.log(file);
     imageConversion.compressAccurately(file,200)
         .then(res=>{
@@ -50,7 +50,7 @@ function view(){
 2. Compress images at a quality of 0.9
 ```js
 function view(){
-    var file = document.getElementById('demo').files[0];
+    const file = document.getElementById('demo').files[0];
     console.log(file);
     imageConversion.compress(file,0.9)
         .then(res=>{
@@ -77,6 +77,10 @@ Convert an image object into a canvas object.
 
 #### Example:
 ```js
+    imageConversion.imagetoCanvas(image);
+
+    //or
+
     imageConversion.imagetoCanvas(image,{
         width: 300,   //result image's width
         height: 200,  //result image's height
