@@ -5,6 +5,10 @@
 > In addition，image-conversion can specify size to compress the image.
 
 
+## Methods Map
+
+![Alt text](./image/xmind.png?raw=true)
+
 ## Getting started
 
 ### Install
@@ -59,8 +63,6 @@ function view(){
 ## Methods list
 
 `image-conversion` provides many methods to convert between Image,Canvas,File and dataURL,as follow:
-
-![Alt text](./image/xmind.png?raw=true)
 
 ### `imagetoCanvas(image[, config]) → {Promise(Canvas)}`
 
