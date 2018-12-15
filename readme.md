@@ -91,6 +91,7 @@ Convert an image object into a canvas object.
     })
 ```
 `config.orientation` has many options to choose,as follow:
+
 | Options     | Orientation    |
 | ----------- | -----------    |
 | 1           | 0°             |
