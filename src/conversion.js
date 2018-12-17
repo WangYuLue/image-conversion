@@ -269,7 +269,7 @@
      * 		@param {number} accuracy - 相对于指定压缩体积的精确度，范围0.8-0.99，默认0.95；
      * 						  如果设置 图片体积1000Kb,精确度0.9，则压缩结果为900Kb-1100Kb的图片都算合格；
      * @example
-     *  	imageConversion.compress(file,100) 压缩后图片大小为100kb
+     *  	imageConversion.compress(file,100) //压缩后图片大小为100kb
      *
      * 		imageConversion.compress(file,{
      * 			size: 100, //图片压缩体积，单位Kb
