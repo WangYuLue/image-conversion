@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "compress": "gulp",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src/conversion.js",
+    "test": "mocha"
   },
   "author": "wangyulue",
   "keywords": [
@@ -19,11 +20,12 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-es2015": "^6.24.1",
-    "chai": "^4.2.0",
+    "eslint": "^5.10.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
-    "gulp-uglify-es": "^1.0.4",
-    "mocha": "^5.2.0"
+    "gulp-uglify-es": "^1.0.4"
   },
   "dependencies": {}
 }
