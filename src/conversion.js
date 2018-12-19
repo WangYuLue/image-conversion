@@ -64,8 +64,7 @@
     const cvs = document.createElement('canvas');
     const ctx = cvs.getContext('2d');
     let height;
-    let
-      width;
+    let width;
     // 设置宽高
     if (!config.scale) {
       width = config.width || image.width;
@@ -85,7 +84,7 @@
       cvs.width = width;
     }
     // 设置方向
-    switch (config.orientation) {
+    switch (Number(config.orientation)) {
       case 3:
         ctx.rotate(180 * Math.PI / 180);
         ctx.drawImage(image, -cvs.width, -cvs.height, cvs.width, cvs.height);
@@ -198,9 +197,10 @@
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
-    return new Blob([u8arr], {
-      type: type || mime,
-    });
+    if (['image/png', 'image/jpeg', 'image/gif'].every(i => i !== type)) {
+      type = mime;
+    }
+    return new Blob([u8arr], { type });
   };
 
   /**
@@ -232,6 +232,7 @@
    *
    * 		imageConversion.compress(file,{
    * 			quality: 0.8, //图片压缩质量
+   *      type："image/png", //转换后的图片类型，选项有 "image/png", "image/jpeg", "image/gif"
    * 			width: 300, //生成图片的宽度
    * 			height：200， //生产图片的高度
    * 			scale: 0.5， //相对于原始图片的缩放比率,设置config.scale后会覆盖config.width和config.height的设置；
@@ -244,16 +245,23 @@
     if (!(file instanceof Blob)) {
       throw new Error('compress(): First arg must be a Blob object or a File object.');
     }
-    if (typeof config === 'number') {
+    if (typeof config !== 'object') {
       config = Object.assign({
         quality: config,
       });
+    }
+    config.quality = Number(config.quality);
+    if (Number.isNaN(config.quality)) {
+      return file;
     }
     const dataURL = await methods.filetoDataURL(file);
     const mime = dataURL.split(',')[0].match(/:(.*?);/)[1]; // 原始图像图片类型
     const image = await methods.dataURLtoImage(dataURL);
     const canvas = await methods.imagetoCanvas(image, config);
     const compressDataURL = await methods.canvastoDataURL(canvas, config.quality);
+    if (['image/png', 'image/jpeg', 'image/gif'].every(i => i !== config.type)) {
+      config.type = mime;
+    }
     const compressFile = await methods.dataURLtoFile(compressDataURL, mime);
     return compressFile;
   };
@@ -272,7 +280,8 @@
    *
    * 		imageConversion.compress(file,{
    * 			size: 100, //图片压缩体积，单位Kb
-   *          accuracy: 0.9 //图片压缩体积的精确度，默认0.95
+   *      accuracy: 0.9, //图片压缩体积的精确度，默认0.95
+   *      type："image/png", //转换后的图片类型，选项有 "image/png", "image/jpeg", "image/gif"
    * 			width: 300, //生成图片的宽度
    * 			height: 200, //生产图片的高度
    * 			scale: 0.5, //相对于原始图片的缩放比率,设置config.scale后会覆盖config.width和config.height的设置；
@@ -285,17 +294,22 @@
     if (!(file instanceof Blob)) {
       throw new Error('compressAccurately(): First arg must be a Blob object or a File object.');
     }
-    if (typeof config === 'number') {
+    if (typeof config !== 'object') {
       config = Object.assign({
         size: config,
       });
+    }
+    // 如果指定体积不是数字或者数字字符串，则不做处理
+    config.size = Number(config.size);
+    if (Number.isNaN(config.size)) {
+      return file;
     }
     // 如果指定体积大于原文件体积，则不做处理；
     if (config.size * 1024 > file.size) {
       return file;
     }
+    config.accuracy = Number(config.accuracy);
     if (!config.accuracy
-      || typeof config.accuracy !== 'number'
       || config.accuracy < 0.8
       || config.accuracy > 0.99) {
       config.accuracy = 0.95; // 默认精度0.95
@@ -358,7 +372,10 @@
         break;
       }
     }
-    const compressFile = await methods.dataURLtoFile(compressDataURL, mime);
+    if (['image/png', 'image/jpeg', 'image/gif'].every(i => i !== config.type)) {
+      config.type = mime;
+    }
+    const compressFile = await methods.dataURLtoFile(compressDataURL, config.type);
     // console.log("最终图片大小：", compressFile.size);
     return compressFile;
   };

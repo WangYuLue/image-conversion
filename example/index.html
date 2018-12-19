@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="../src/conversion.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <style>
+    .border-dark{
+      border-color: rgb(206, 212, 218) !important;
+    }
+    .header{
+      padding: 20px 20px 0 20px;
+    }
+    #input,#output{
+      margin-top: 0.5rem;
+      overflow: auto;
+      max-height: 500px;
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="header">
+    <h1><a style="color:black" href="https://github.com/WangYuLue/image-conversion">image-conversion</a></h1>
+    <p>A simple and easy-to-use JS image convert tools, which can specify size to compress the image.</p>
+  </div>
+  <hr>
+  <div style="margin:0 50px">
+    <div class="row">
+      <div class="col-md-4 border border-dark rounded pt-3 pb-3">
+        <h2>Options</h2>
+        <hr>
+        <div class="custom-file mb-3">
+          <input type="file" class="custom-file-input" id="file" onchange="change()">
+          <label class="custom-file-label" id="fileName" style="overflow: auto;">Choose file</label>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">*size</span>
+          </div>
+          <input type="number" id="size" class="form-control" placeholder="compressed image size" value=200>
+          <div class="input-group-append">
+            <span class="input-group-text">KB</span>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">accuracy</span>
+          </div>
+          <input type="number" id="accuracy" placeholder="range 0.8~0.99" class="form-control">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text">type</label>
+          </div>
+          <select class="custom-select" id="type">
+            <option selected>Choose...</option>
+            <option value="image/png">image/png</option>
+            <option value="image/jpeg">image/jpeg</option>
+            <option value="image/gif">image/gif</option>
+          </select>
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">width</span>
+          </div>
+          <input type="number" id="width" class="form-control" onfocus="change2('width')">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">height</span>
+          </div>
+          <input type="number" id="height" class="form-control" onfocus="change2('height')">
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">scale</span>
+          </div>
+          <input type="number" id="scale" class="form-control" value="0.5" placeholder="range 0~10" onfocus="change2('scale')">
+        </div>
+        <div class="alert alert-warning" role="alert">
+            scale option will override the width and height option
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text">orientation</label>
+          </div>
+          <select class="custom-select" id="orientation">
+            <option selected>Choose...</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="compress()">Compress</button>
+      </div>
+      <div class="col-md-8 pr-0">
+        <div class="col border border-dark rounded pt-3 pb-3">
+          <h2>Original image</h2>
+          <hr>
+          <div class="row">
+            <div class="col">
+              <span>size:</span>
+              <span id="input_size"></span>
+            </div>
+            <div class="col">
+              <span>type:</span>
+              <span id="input_type"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <span>width:</span>
+              <span id="input_width"></span>
+            </div>
+            <div class="col">
+              <span>height:</span>
+              <span id="input_height"></span>
+            </div>
+          </div>
+          <div id="input" class="border border-dark"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col border border-dark rounded pt-3 pb-3">
+        <h2>Compressed image</h2>
+        <hr>
+        <div class="row">
+          <div class="col">
+            <span>size:</span>
+            <span id="output_size"></span>
+          </div>
+          <div class="col">
+            <span>type:</span>
+            <span id="output_type"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <span>width:</span>
+            <span id="output_width"></span>
+          </div>
+          <div class="col">
+            <span>height:</span>
+            <span id="output_height"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button class="btn btn-success btn-sm" onclick="download()">Download</button>
+          </div>
+          <div class="col">
+            <span>runtime:</span>
+            <span id="output_runtime"></span>
+          </div>
+        </div>
+        <div>
+        </div>
+        <div id="output" class="border border-dark"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const data = {
+      file : null,
+      compress_file : null,
+      runtime : null
+    }
+
+    init();
+
+    async function init () {
+      const file = await imageConversion.urltoBlob('large.png');
+      data.file = file;
+      const image = await filetoImage(file);
+      showMessage(file, image, "input");
+      compress()
+    }
+
+    function getDom(domId) {
+      return document.getElementById(domId)
+    }
+
+    async function change() {
+      const file = getDom("file").files[0];
+      data.file = file;
+      const image = await filetoImage(file);
+      showMessage(file, image, "input");
+    }
+    //Setting config.scale will override the settings of
+    //config.width and config.height;
+    function change2 (type){
+      if(type==="width" || type==="height"){
+        getDom("scale").value = '';
+      }else if(type==="scale"){
+        getDom("width").value = '';
+        getDom("height").value = '';
+      }
+    }
+
+    function showMessage(file, image, name) {
+      const size = (file.size / 1024).toFixed(2);
+      if(name==="output"){
+        const origin_size = getDom("size").value;
+        getDom(name + "_size").innerText = size + " KB (accuracy:" + ((1-Math.abs(1-size/origin_size))*100).toFixed(2) + "%)";
+        if(data.runtime){
+          getDom(name + "_runtime").innerText = data.runtime + " ms";
+        }
+      }else{
+        getDom("fileName").innerText = file.name || "Choose file";
+        getDom(name + "_size").innerText = size + " KB";
+      }
+      getDom(name + "_type").innerText = file.type;
+      getDom(name + "_width").innerText = image.width + " px";
+      getDom(name + "_height").innerText = image.height + " px";
+      getDom(name).innerHTML = '';
+      getDom(name).append(image);
+    }
+
+    async function compress() {
+      const file = data.file;
+      const size = getDom("size").value;
+      const accuracy = getDom("accuracy").value;
+      const type = getDom("type").value;
+      const width = getDom("width").value;
+      const height = getDom("height").value;
+      const scale = getDom("scale").value;
+      const orientation = getDom("orientation").value;
+      const startTime = Date.now();
+      const compress_file = await imageConversion.compressAccurately(file, {
+        size,
+        accuracy,
+        type,
+        width,
+        height,
+        scale,
+        orientation
+      });
+      data.runtime = Date.now()-startTime;
+      // const compress_file = await imageConversion.compress(file, '0.83');
+      const compress_image = await filetoImage(compress_file);
+      data.compress_file = compress_file;
+      showMessage(compress_file, compress_image, "output");
+    }
+
+    async function filetoImage(file) {
+      const dataURL = await imageConversion.filetoDataURL(file);
+      return await imageConversion.dataURLtoImage(dataURL);
+    }
+
+    function download () {
+      imageConversion.downloadFile(data.compress_file);
+    }
+  </script>
+</body>
+
+</html>
