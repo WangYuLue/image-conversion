@@ -17,9 +17,9 @@
     "compress"
   ],
   "git-pre-hooks": {
+    "pre-commit": "npm run compress",
     "pre-push": [
       "npm version patch",
-      "gulp",
       "npm publish"
     ]
   },
