@@ -356,9 +356,9 @@
       if (x === 7) {
         if (resultSize.max < CalculationSize || resultSize.min > CalculationSize) {
           compressDataURL = [compressDataURL, ...tempDataURLs]
-            .filter(i => i)
-            .sort((a, b) => Math.max(b.length * proportion - resultSize.accurate)
-              - Math.max(a.length * proportion - resultSize.accurate))[0];
+            .filter(i => i) // 去除null
+            .sort((a, b) => Math.abs(a.length * proportion - resultSize.accurate)
+              - Math.abs(b.length * proportion - resultSize.accurate))[0];
         }
         break;
       }
