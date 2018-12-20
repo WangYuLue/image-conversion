@@ -5,9 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src="../src/conversion.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous">
+  <script src="../build/conversion.js"></script>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
   <style>
     .border-dark{
       border-color: rgb(206, 212, 218) !important;
@@ -43,7 +42,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">*size</span>
           </div>
-          <input type="number" id="size" class="form-control" placeholder="compressed image size" value=200>
+          <input type="number" id="size" class="form-control" placeholder="compressed image size" value=80>
           <div class="input-group-append">
             <span class="input-group-text">KB</span>
           </div>
@@ -181,7 +180,7 @@
     init();
 
     async function init () {
-      const file = await imageConversion.urltoBlob('large.png');
+      const file = await imageConversion.urltoBlob('./img/demo.png');
       data.file = file;
       const image = await filetoImage(file);
       showMessage(file, image, "input");
