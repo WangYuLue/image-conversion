@@ -180,9 +180,9 @@ Compress a File(Blob) object based on size.
 #### Example:
 ```js
 // number
-imageConversion.compress(file,100); //The compressed image size is 100kb
+imageConversion.compressAccurately(file,100); //The compressed image size is 100kb
 // object
-imageConversion.compress(file,{
+imageConversion.compressAccurately(file,{
   size: 100,    //The compressed image size is 100kb
   accuracy: 0.9,//the accuracy of image compression size,range 0.8-0.99,default 0.95;
                 //this means if the picture size is set to 1000Kb and the
