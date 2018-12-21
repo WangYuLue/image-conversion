@@ -17,11 +17,7 @@
     "compress"
   ],
   "git-pre-hooks": {
-    "pre-commit": "npm run compress",
-    "pre-push": [
-      "npm version patch",
-      "npm publish"
-    ]
+
   },
   "license": "MIT",
   "devDependencies": {

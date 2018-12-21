@@ -1,6 +1,6 @@
 # JS中通过指定大小来压缩图片
 
-前不久王二写了一个[图片处理库](https://juejin.im/post/5a097b2ff265da43231a79fa)，可以指定图片质量压缩图片，调用的是javaScript的原生方法 `toDataURL` 和 `toBlob`，库里有如下这些方法：
+前不久王二写了一个[图片处理库](https://juejin.im/post/5a097b2ff265da43231a79fa)，可以指定图片质量压缩图片，调用的是javaScript的原生方法 `toDataURL` 和 `toBlob`，库里有如下这些方法：
 
 ![Alt text](https://github.com/WangYuLue/pic_of_blog/blob/master/1812/2.png?raw=true)
 
@@ -48,10 +48,12 @@ imageConversion.compressAccurately(file,{
   scale: 0.5,
 })
 ```
-可以参考[github](https://github.com/WangYuLue/image-conversion)了解更加详细的使用方法。
+可以参考 [github](https://github.com/WangYuLue/image-conversion) 了解更加详细的使用方法。
 
-实现`compressAccurately`方法的原理其实很简单，就是 **通过二分法来找到最接近指定大小的那个图片质量**。
+实现 `compressAccurately` 方法的原理其实很简单，就是 **通过二分法来找到最接近指定大小的那个图片质量**。
 
-如果想亲手体验一下，可以[戳这里](http://www.wangyulue.com/assets/image-comversion/example/index.html)在线体验。如果使用有什么问题，及时提issue给我。
+如果想亲手体验一下，可以 [戳这里](http://www.wangyulue.com/assets/image-comversion/example/index.html) 在线体验。如果使用有什么问题，及时提issue给我。
 
-如果觉得还不错，别忘了来[github](https://github.com/WangYuLue/image-conversion)star一下哦。
+如果觉得还不错，别忘了来 [github](https://github.com/WangYuLue/image-conversion) star一下哦。
+
+原文地址：[王玉略的个人网站](http://www.wangyulue.com/2018/12/20/JS%E4%B8%AD%E9%80%9A%E8%BF%87%E6%8C%87%E5%AE%9A%E5%A4%A7%E5%B0%8F%E6%9D%A5%E5%8E%8B%E7%BC%A9%E5%9B%BE%E7%89%87/#more)
