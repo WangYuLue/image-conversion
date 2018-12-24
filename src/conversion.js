@@ -1,5 +1,5 @@
 /**
- * @file A simple and easy-to-use JS image compression, tools
+ * @file A simple and easy-to-use JS image compression tools
  * @author wangyulue(wangyulue@gmail.com)
  */
 
@@ -225,14 +225,13 @@
   /**
    * 压缩File（Blob）对象
    * @param {Blob} file - 一个File（Blob）对象
-   * @param {(number|object)} config - 如果传入是number类型，传入范围 0-1，表示图片压缩质量,默认0.92；
-   * 								                   也可以传入object类型，以便更详细的配置
+   * @param {(number|object)} config - 如果传入是number类型，传入范围 0-1，表示图片压缩质量,默认0.92；也可以传入object类型，以便更详细的配置
    * @example
    * 		imageConversion.compress(file,0.8)
    *
    * 		imageConversion.compress(file,{
    * 			quality: 0.8, //图片压缩质量
-   *      type："image/png", //转换后的图片类型，选项有 "image/png", "image/jpeg", "image/gif"
+   * 			type："image/png", //转换后的图片类型，选项有 "image/png", "image/jpeg", "image/gif"
    * 			width: 300, //生成图片的宽度
    * 			height：200， //生产图片的高度
    * 			scale: 0.5， //相对于原始图片的缩放比率,设置config.scale后会覆盖config.width和config.height的设置；
@@ -270,18 +269,17 @@
    * 根据体积压缩File（Blob）对象
    *
    * @param {Blob} file - 一个File（Blob）对象
-   * @param {(number|object)} config - 如果传入是number类型，则指定压缩图片的体积,单位Kb
-   * 								                   也可以传入object类型，以便更详细的配置
+   * @param {(number|object)} config - 如果传入是number类型，则指定压缩图片的体积,单位Kb;也可以传入object类型，以便更详细的配置
    * 		@param {number} size - 指定压缩图片的体积,单位Kb
    * 		@param {number} accuracy - 相对于指定压缩体积的精确度，范围0.8-0.99，默认0.95；
-   * 						                   如果设置 图片体积1000Kb,精确度0.9，则压缩结果为900Kb-1100Kb的图片都算合格；
+   *        如果设置 图片体积1000Kb,精确度0.9，则压缩结果为900Kb-1100Kb的图片都算合格；
    * @example
    *  	imageConversion.compress(file,100) //压缩后图片大小为100kb
    *
    * 		imageConversion.compress(file,{
    * 			size: 100, //图片压缩体积，单位Kb
-   *      accuracy: 0.9, //图片压缩体积的精确度，默认0.95
-   *      type："image/png", //转换后的图片类型，选项有 "image/png", "image/jpeg", "image/gif"
+   * 			accuracy: 0.9, //图片压缩体积的精确度，默认0.95
+   * 			type："image/png", //转换后的图片类型，选项有 "image/png", "image/jpeg", "image/gif"
    * 			width: 300, //生成图片的宽度
    * 			height: 200, //生产图片的高度
    * 			scale: 0.5, //相对于原始图片的缩放比率,设置config.scale后会覆盖config.width和config.height的设置；
