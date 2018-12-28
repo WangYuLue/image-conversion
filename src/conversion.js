@@ -76,7 +76,7 @@
       height = image.height * scale;
     }
     // 当顺时针或者逆时针旋转90时，需要交换canvas的宽高
-    if ([5, 6, 7, 8].some(i => i === config.orientation)) {
+    if ([5, 6, 7, 8].some(i => i === Number(config.orientation))) {
       cvs.height = width;
       cvs.width = height;
     } else {
