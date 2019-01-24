@@ -26,7 +26,7 @@ npm i image-conversion --save
 
 in the browser:
 ```html
-<script src="https://raw.githubusercontent.com/WangYuLue/image-conversion/master/build/conversion.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/WangYuLue/image-conversion/build/conversion.js"></script>
 ```
 in the node:
 ```js
@@ -44,11 +44,9 @@ const imageConversion = require("image-conversion")
 function view(){
   const file = document.getElementById('demo').files[0];
   console.log(file);
-  imageConversion.compressAccurately(file,200)
-    .then(res=>{
-      //The res in the promise is a compressed Blob type (which can be treated as a File type) file;
-      console.log(res);
-    })
+  imageConversion.compressAccurately(file,200).then(res=>{
+    //The res in the promise is a compressed Blob type (which can be treated as a File type) file;
+    console.log(res);
   })
 }
 
@@ -66,10 +64,8 @@ async function view() {
 function view(){
   const file = document.getElementById('demo').files[0];
   console.log(file);
-  imageConversion.compress(file,0.9)
-    .then(res=>{
-      console.log(res);
-    })
+  imageConversion.compress(file,0.9).then(res=>{
+    console.log(res);
   })
 }
 ```
