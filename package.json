@@ -1,6 +1,6 @@
 {
   "name": "image-conversion",
-  "version": "1.0.10",
+  "version": "1.1.2",
   "description": "A simple and easy-to-use JS image convert tools, which can specify size to compress the image.",
   "main": "index.js",
   "scripts": {
@@ -16,13 +16,6 @@
     "convert",
     "compress"
   ],
-  "git-pre-hooks": {
-    "pre-commit": "npm run compress",
-    "pre-push": [
-      "npm version patch",
-      "npm publish"
-    ]
-  },
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.3",
