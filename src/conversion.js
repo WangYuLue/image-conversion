@@ -66,9 +66,14 @@
     let height;
     let width;
     // 设置宽高
+    for (const i in config) {
+      if (Object.prototype.hasOwnProperty.call(config, i)) {
+        config[i] = Number(config[i]);
+      }
+    }
     if (!config.scale) {
-      width = config.width || image.width;
-      height = config.height || image.height;
+      width = config.width || config.height * image.width / image.height || image.width;
+      height = config.height || config.width * image.height / image.width || image.height;
     } else {
       // 缩放比例0-10，不在此范围则保持原来图像大小
       const scale = config.scale > 0 && config.scale < 10 ? config.scale : 1;
@@ -76,7 +81,7 @@
       height = image.height * scale;
     }
     // 当顺时针或者逆时针旋转90时，需要交换canvas的宽高
-    if ([5, 6, 7, 8].some(i => i === Number(config.orientation))) {
+    if ([5, 6, 7, 8].some(i => i === config.orientation)) {
       cvs.height = width;
       cvs.width = height;
     } else {
@@ -84,7 +89,7 @@
       cvs.width = width;
     }
     // 设置方向
-    switch (Number(config.orientation)) {
+    switch (config.orientation) {
       case 3:
         ctx.rotate(180 * Math.PI / 180);
         ctx.drawImage(image, -cvs.width, -cvs.height, cvs.width, cvs.height);

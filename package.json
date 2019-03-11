@@ -6,6 +6,7 @@
   "scripts": {
     "compress": "gulp",
     "lint": "eslint src/conversion.js",
+    "fix-lint": "eslint --fix src/conversion.js",
     "test": "mocha"
   },
   "author": "wangyulue",
