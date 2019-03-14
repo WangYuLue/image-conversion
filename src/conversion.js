@@ -261,7 +261,7 @@
     const dataURL = await methods.filetoDataURL(file);
     const mime = dataURL.split(',')[0].match(/:(.*?);/)[1]; // 原始图像图片类型
     const image = await methods.dataURLtoImage(dataURL);
-    const canvas = await methods.imagetoCanvas(image, config);
+    const canvas = await methods.imagetoCanvas(image, Object.assign({}, config));
     const compressDataURL = await methods.canvastoDataURL(canvas, config.quality);
     if (['image/png', 'image/jpeg', 'image/gif'].every(i => i !== config.type)) {
       config.type = mime;
@@ -330,7 +330,7 @@
     // console.log('目标尺寸max：', resultSize.max);
     // console.log('目标尺寸min：', resultSize.min);
     const image = await methods.dataURLtoImage(dataURL);
-    const canvas = await methods.imagetoCanvas(image, config);
+    const canvas = await methods.imagetoCanvas(image, Object.assign({}, config));
     /**
      * 经过测试发现，blob.size与dataURL.length的比值约等于0.75
      * 这个比值可以同过dataURLtoFile这个方法来测试验证
