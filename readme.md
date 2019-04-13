@@ -143,7 +143,7 @@ Compress a File(Blob) object.
 
 #### Tips:
 
-**If the image is in png format, please specify jpeg format for better compression.**
+**If you compress png transparent images, please select 'image/png' type.**
 
 #### Example:
 ```js
@@ -179,7 +179,7 @@ Compress a File(Blob) object based on size.
 
 #### Tips:
 
-**If the image is in png format, please specify jpeg format for better compression.**
+**If you compress png transparent images, please select 'image/png' type**
 
 #### Example:
 ```js
