@@ -141,6 +141,10 @@ Compress a File(Blob) object.
 | file        | File(Blob)  |a File(Blob) object|
 | config      | number \| object |if number type, range 0-1, indicate the image quality; <br> if object type,you can pass parameters to the `imagetoCanvas` and `dataURLtoFile` method;<br> Reference is as follow:|
 
+#### Tips:
+
+**If the image is in png format, please specify jpeg format for better compression.**
+
 #### Example:
 ```js
 // number
