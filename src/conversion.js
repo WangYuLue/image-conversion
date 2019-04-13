@@ -138,10 +138,11 @@
    *
    * @param {canvas} canvas
    * @param {number=} quality - 传入范围 0-1，表示图片压缩质量，默认0.92
+   * @param {string=} type - 确定转换后的图片类型，选项有 "image/png", "image/jpeg", "image/gif",默认"image/jpeg"
    * @returns {Promise(Blob)}
    */
-  methods.canvastoFile = function (canvas, quality) {
-    return new Promise(resolve => canvas.toBlob(blob => resolve(blob), 'image/jpeg', quality));
+  methods.canvastoFile = function (canvas, quality, type = 'image/jpeg') {
+    return new Promise(resolve => canvas.toBlob(blob => resolve(blob), type, quality));
   };
 
   /**
@@ -150,10 +151,14 @@
    *
    * @param {canvas} canvas
    * @param {number=} quality - 传入范围 0-1，表示图片压缩质量，默认0.92
+   * @param {string=} type - 确定转换后的图片类型，选项有 "image/png", "image/jpeg", "image/gif",默认"image/jpeg"
    * @returns {Promise(string)} Promise含有一个dataURL字符串参数
    */
-  methods.canvastoDataURL = async function (canvas, quality) {
-    return canvas.toDataURL('image/jpeg', quality);
+  methods.canvastoDataURL = async function (canvas, quality, type) {
+    if (checkImageType(type)) {
+      type = 'image/jpeg';
+    }
+    return canvas.toDataURL(type, quality);
   };
 
   /**
@@ -202,7 +207,7 @@
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
-    if (['image/png', 'image/jpeg', 'image/gif'].every(i => i !== type)) {
+    if (checkImageType(type)) {
       type = mime;
     }
     return new Blob([u8arr], { type });
@@ -260,13 +265,13 @@
     }
     const dataURL = await methods.filetoDataURL(file);
     const mime = dataURL.split(',')[0].match(/:(.*?);/)[1]; // 原始图像图片类型
-    const image = await methods.dataURLtoImage(dataURL);
-    const canvas = await methods.imagetoCanvas(image, Object.assign({}, config));
-    const compressDataURL = await methods.canvastoDataURL(canvas, config.quality);
-    if (['image/png', 'image/jpeg', 'image/gif'].every(i => i !== config.type)) {
+    if (checkImageType(config.type)) {
       config.type = mime;
     }
-    const compressFile = await methods.dataURLtoFile(compressDataURL, mime);
+    const image = await methods.dataURLtoImage(dataURL);
+    const canvas = await methods.imagetoCanvas(image, Object.assign({}, config));
+    const compressDataURL = await methods.canvastoDataURL(canvas, config.quality, config.type);
+    const compressFile = await methods.dataURLtoFile(compressDataURL, config.type);
     return compressFile;
   };
 
@@ -324,6 +329,9 @@
     };
     const dataURL = await methods.filetoDataURL(file);
     const mime = dataURL.split(',')[0].match(/:(.*?);/)[1]; // 原始图像图片类型
+    if (checkImageType(config.type)) {
+      config.type = mime;
+    }
     // const originalSize = file.size;
     // console.log('原始图像尺寸：', originalSize); //原始图像尺寸
     // console.log('目标尺寸：', config.size * 1024);
@@ -348,7 +356,7 @@
       // console.group();
       // console.log("循环次数：", x);
       // console.log("当前图片质量", imageQuality);
-      compressDataURL = await methods.canvastoDataURL(canvas, imageQuality);
+      compressDataURL = await methods.canvastoDataURL(canvas, imageQuality, config.type);
       const CalculationSize = compressDataURL.length * proportion;
       // console.log("当前图片尺寸", CalculationSize);
       // console.log("当前压缩率", CalculationSize / originalSize);
@@ -375,13 +383,19 @@
         break;
       }
     }
-    if (['image/png', 'image/jpeg', 'image/gif'].every(i => i !== config.type)) {
-      config.type = mime;
-    }
     const compressFile = await methods.dataURLtoFile(compressDataURL, config.type);
     // console.log("最终图片大小：", compressFile.size);
+
+    // 如果压缩后体积大于原文件体积，则返回源文件；
+    if (compressFile.size > file.size) {
+      return file;
+    }
     return compressFile;
   };
+
+  function checkImageType(type) {
+    return ['image/png', 'image/jpeg', 'image/gif'].every(i => i !== type);
+  }
 
   return methods;
 })));

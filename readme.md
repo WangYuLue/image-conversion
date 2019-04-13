@@ -151,7 +151,7 @@ imageConversion.compress(file,0.8)
 // object
 imageConversion.compress(file,{
   quality: 0.8,
-  type: "image/png",
+  type: "image/jpeg",
   width: 300,
   height: 200,
   orientation:2,
@@ -173,6 +173,10 @@ Compress a File(Blob) object based on size.
 | file        | File(Blob)  |a File(Blob) object|
 | config      | number \| object |if number type, specify the size of the compressed image(unit KB); <br> if object type,you can pass parameters to the `imagetoCanvas` and `dataURLtoFile` method;<br> Reference is as follow:|
 
+#### Tips:
+
+**If the image is in png format, please specify jpeg format for better compression.**
+
 #### Example:
 ```js
 // number
@@ -184,7 +188,7 @@ imageConversion.compressAccurately(file,{
                 //this means if the picture size is set to 1000Kb and the
                 //accuracy is 0.9, the image with the compression result
                 //of 900Kb-1100Kb is considered acceptable;
-  type: "image/png",
+  type: "image/jpeg",
   width: 300,
   height: 200,
   orientation:2,
@@ -196,7 +200,7 @@ imageConversion.compressAccurately(file,{
 Promise that contains a Blob object.
 
 
-### `canvastoDataURL(canvas[, quality]) → {Promise(string)}`
+### `canvastoDataURL(canvas[, quality, type]) → {Promise(string)}`
 
 #### Description:
 Convert a Canvas object into a dataURL string, this method can be compressed.
@@ -206,12 +210,13 @@ Convert a Canvas object into a dataURL string, this method can be compressed.
 | ----------- | ----------- |---|----------- |
 | canvas      | canvas      |   | a Canvas object|
 | quality     | number     | optional |range 0-1, indicate the image quality, default 0.92|
+| type        | string     | optional |determine the converted image type;<br> the options are "image/png", "image/jpeg", "image/gif",default "image/jpeg"|
 
 #### Returns:
 Promise that contains a dataURL string.
 
 
-### `canvastoFile(canvas[, quality]) → {Promise(Blob)}`
+### `canvastoFile(canvas[, quality, type]) → {Promise(Blob)}`
 
 #### Description:
 Convert a Canvas object into a Blob object, this method can be compressed.
@@ -221,6 +226,7 @@ Convert a Canvas object into a Blob object, this method can be compressed.
 | ----------- | ----------- |---|----------- |
 | canvas      | canvas      |   | a Canvas object|
 | quality     | number     | optional |range 0-1, indicate the image quality, default 0.92|
+| type        | string     | optional |determine the converted image type;<br> the options are "image/png", "image/jpeg", "image/gif",default "image/jpeg"|
 
 #### Returns:
 Promise that contains a Blob object.

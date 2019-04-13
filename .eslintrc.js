@@ -13,5 +13,6 @@ module.exports = {
         "no-await-in-loop":0,
         "prefer-destructuring":0,
         "no-restricted-syntax":0,
+        "no-use-before-define":0
     }
 };
