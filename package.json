@@ -1,6 +1,6 @@
 {
   "name": "image-conversion",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "description": "A simple and easy-to-use JS image convert tools, which can specify size to compress the image.",
   "main": "index.js",
   "scripts": {
