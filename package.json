@@ -1,6 +1,6 @@
 {
   "name": "image-conversion",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "A simple and easy-to-use JS image convert tools, which can specify size to compress the image.",
   "main": "index.js",
   "scripts": {
@@ -20,21 +20,23 @@
   "git-pre-hooks": {
     "pre-commit": "npm run compress",
     "pre-push": [
-      "npm version patch",
-      "npm publish"
+      "npm version patch"
     ]
   },
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-preset-es2015": "^6.24.1",
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
     "eslint": "^5.10.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "git-pre-hooks": "^1.2.0",
     "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.1",
+    "gulp-babel": "^8.0.0-beta.2",
     "gulp-uglify-es": "^1.0.4"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@babel/runtime": "^7.4.4"
+  }
 }
