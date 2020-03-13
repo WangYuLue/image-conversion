@@ -5,31 +5,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src="../src/conversion.js"></script>
+  <script src="../build/conversion.js"></script>
   <link rel="stylesheet" href="./css/bootstrap.min.css">
   <style>
-    .border-dark{
+    .border-dark {
       border-color: rgb(206, 212, 218) !important;
     }
-    .header{
+
+    .header {
       padding: 20px 20px 0 20px;
     }
-    .alert-warning{
+
+    .alert-warning {
       font-size: 12px;
     }
-    #input,#output{
+
+    #input,
+    #output {
       margin-top: 0.5rem;
       overflow: auto;
       max-height: 600px;
     }
+
   </style>
   <title>Document</title>
 </head>
 
 <body>
   <div class="header">
-    <h1><a style="color:black" href="https://github.com/WangYuLue/image-conversion">image-conversion</a><a href="https://github.com/WangYuLue/image-conversion"><img style="margin-left: 10px;height: 26px;" src="./img/icon.png" alt=""></a></h1>
-    <p>A simple and easy-to-use JS image convert tools, which can specify size to compress the image.</p>
+    <h1><a style="color:black"
+        href="https://github.com/WangYuLue/image-conversion">image-conversion</a><a
+        href="https://github.com/WangYuLue/image-conversion"><img
+          style="margin-left: 10px;height: 26px;" src="./img/icon.png" alt=""></a></h1>
+    <p>A simple and easy-to-use JS image convert tools, which can specify size to compress the
+      image.</p>
   </div>
   <hr>
   <div style="margin:0 50px">
@@ -46,7 +55,8 @@
           <div class="input-group-prepend">
             <span class="input-group-text">*size</span>
           </div>
-          <input type="number" id="size" class="form-control" placeholder="compressed image size" value=80>
+          <input type="number" id="size" class="form-control" placeholder="compressed image size"
+            value=80>
           <div class="input-group-append">
             <span class="input-group-text">KB</span>
           </div>
@@ -69,7 +79,7 @@
           </select>
         </div>
         <div class="alert alert-warning" role="alert">
-            if you compress png transparent images, please select 'image/png' type
+          if you compress png transparent images, please select 'image/png' type
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
@@ -87,10 +97,11 @@
           <div class="input-group-prepend">
             <span class="input-group-text">scale</span>
           </div>
-          <input type="number" id="scale" class="form-control" value="0.5" placeholder="range 0~10" onfocus="change2('scale')">
+          <input type="number" id="scale" class="form-control" value="0.5" placeholder="range 0~10"
+            onfocus="change2('scale')">
         </div>
         <div class="alert alert-warning" role="alert">
-            scale option will override the width and height option
+          scale option will override the width and height option
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
@@ -179,14 +190,14 @@
   </div>
   <script>
     const data = {
-      file : null,
-      compress_file : null,
-      runtime : null
+      file: null,
+      compress_file: null,
+      runtime: null
     }
 
     init();
 
-    async function init () {
+    async function init() {
       const file = await imageConversion.urltoBlob('./img/demo.png');
       data.file = file;
       const image = await filetoImage(file);
@@ -206,10 +217,10 @@
     }
     //Setting config.scale will override the settings of
     //config.width and config.height;
-    function change2 (type){
-      if(type==="width" || type==="height"){
+    function change2(type) {
+      if (type === "width" || type === "height") {
         getDom("scale").value = '';
-      }else if(type==="scale"){
+      } else if (type === "scale") {
         getDom("width").value = '';
         getDom("height").value = '';
       }
@@ -217,13 +228,13 @@
 
     function showMessage(file, image, name) {
       const size = (file.size / 1024).toFixed(2);
-      if(name==="output"){
+      if (name === "output") {
         const origin_size = getDom("size").value;
-        getDom(name + "_size").innerText = size + " KB (accuracy:" + ((1-Math.abs(1-size/origin_size))*100).toFixed(2) + "%)";
-        if(data.runtime){
+        getDom(name + "_size").innerText = size + " KB (accuracy:" + ((1 - Math.abs(1 - size / origin_size)) * 100).toFixed(2) + "%)";
+        if (data.runtime) {
           getDom(name + "_runtime").innerText = data.runtime + " ms";
         }
-      }else{
+      } else {
         getDom("fileName").innerText = file.name || "Choose file";
         getDom(name + "_size").innerText = size + " KB";
       }
@@ -253,7 +264,7 @@
         scale,
         orientation
       });
-      data.runtime = Date.now()-startTime;
+      data.runtime = Date.now() - startTime;
       // const compress_file = await imageConversion.compress(file, '0.83');
       const compress_image = await filetoImage(compress_file);
       data.compress_file = compress_file;
@@ -265,7 +276,7 @@
       return await imageConversion.dataURLtoImage(dataURL);
     }
 
-    function download () {
+    function download() {
       imageConversion.downloadFile(data.compress_file);
     }
   </script>

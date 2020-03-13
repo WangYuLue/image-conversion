@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="../build/conversion.js"></script>
+    <script src="../src/conversion.js"></script>
     <title>Document</title>
 </head>
+
 <body>
     <input type="file" onchange="fileChange()">
     <div style="margin-top:20px">
         <canvas width="1000" height="600"></canvas>
     </div>
     <script>
-        const urls = ['./img/demo.png','./img/large.jpg','./img/logo.gif'];
+        const urls = ['./img/demo.png', './img/large.jpg', './img/logo.gif'];
         let loadFile = null;
         init();
-        urls.forEach(url=>{
-            imageConversion.urltoBlob(url).then(file=>{
+        urls.forEach(url => {
+            imageConversion.urltoBlob(url).then(file => {
                 loadFile = file;
                 start()
             });
         });
-        function fileChange () {
+        function fileChange() {
             loadFile = document.querySelector("input").files[0];
             start()
         }
@@ -33,23 +35,23 @@
             const dataURL = await imageConversion.filetoDataURL(file);
             const image = await imageConversion.dataURLtoImage(dataURL);
             const canvas = await imageConversion.imagetoCanvas(image);
-            for(let x=20;x>0;x--){
-                const blob = await imageConversion.canvastoFile(canvas,x/20);
-                data.push({quailty:x*5,size:blob.size,ratio:blob.size/file_size})
+            for (let x = 20; x > 0; x--) {
+                const blob = await imageConversion.canvastoFile(canvas, x / 20);
+                data.push({ quailty: x * 5, size: blob.size, ratio: blob.size / file_size })
             }
             console.log(data);
             draw(data)
         }
-        function draw (data) {
+        function draw(data) {
             const cvs = document.querySelector('canvas');
             const ctx = cvs.getContext('2d');
             const color = getRandomColor();
             ctx.beginPath();
-            data.forEach(i=>{
-                ctx.arc(i.quailty*10,(1-i.ratio)*600,2,0,360,false);
+            data.forEach(i => {
+                ctx.arc(i.quailty * 10, (1 - i.ratio) * 600, 2, 0, 360, false);
                 // ctx.fillText('quailty:'+i.quailty+'%;ratio:'+i.ratio.toFixed(2),i.quailty*10-10,(1-i.ratio)*600-10);
                 // ctx.fillText('压缩比:'+,i.quailty*10-10,(1-i.ratio)*600-20);
-                ctx.fillStyle=color;//填充颜色,默认是黑色
+                ctx.fillStyle = color;//填充颜色,默认是黑色
                 ctx.fill();//画实心圆
                 ctx.closePath();
             })
@@ -62,18 +64,19 @@
             }
             return color;
         }
-        function init () {
+        function init() {
             const cvs = document.querySelector('canvas');
             const ctx = cvs.getContext('2d');
             ctx.beginPath();
             ctx.moveTo(0, 0);
             ctx.lineTo(0, 600);
             ctx.lineTo(1000, 600);
-            ctx.fillText("ratio:100%",5,10);
-            ctx.fillText("quality:1",960,595);
-            ctx.fillText("ratio&quality:0",5,595);
+            ctx.fillText("ratio:100%", 5, 10);
+            ctx.fillText("quality:1", 960, 595);
+            ctx.fillText("ratio&quality:0", 5, 595);
             ctx.stroke();
         }
     </script>
 </body>
+
 </html>
