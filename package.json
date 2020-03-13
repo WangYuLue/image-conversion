@@ -4,6 +4,11 @@
   "description": "A simple and easy-to-use JS image convert tools, which can specify size to compress the image.",
   "main": "index.js",
   "author": "wangyulue",
+  "files": [
+    "build",
+    "src",
+    "index.js"
+  ],
   "keywords": [
     "image",
     "images",
