@@ -21,16 +21,32 @@
 
 ```bash
 npm i image-conversion --save
+
+# or 
+
+yarn add image-conversion
 ```
 ### Include the library
 
-in the browser:
+browser import:
 ```html
 <script src="https://cdn.jsdelivr.net/gh/WangYuLue/image-conversion/build/conversion.js"></script>
 ```
-in the node:
+CommonJS import:
 ```js
 const imageConversion = require("image-conversion")
+```
+
+Amd import:
+
+```js
+import * as imageConversion from 'image-conversion';
+```
+
+or 
+
+```ts
+import {compress, compressAccurately} from 'image-conversion';
 ```
 
 ### Use examples
@@ -80,10 +96,10 @@ function view(){
 Convert an image object into a canvas object.
 
 #### Parameters:
-| Name        | Type        | Attributes | Description |
-| ----------- | ----------- |---|----------- |
-| image       | image       |   | a image object|
-| config      | object      | optional | with this config you can zoom in, zoom out, and rotate the image |
+| Name   | Type   | Attributes | Description                                                      |
+|--------|--------|------------|------------------------------------------------------------------|
+| image  | image  |            | a image object                                                   |
+| config | object | optional   | with this config you can zoom in, zoom out, and rotate the image |
 
 #### Example:
 ```js
@@ -102,16 +118,16 @@ imageConversion.imagetoCanvas(image,{
 ```
 `config.orientation` has many options to choose,as follow:
 
-| Options     | Orientation    |
-| ----------- | -----------    |
-| 1           | 0°             |
-| 2           | horizontal flip|
-| 3           | 180°           |
-| 4           | vertical flip  |
-| 5           | clockwise 90° + horizontal flip|
-| 6           | clockwise 90°|
-| 7           | clockwise 90° + vertical flip|
-| 8           | Counterclockwise 90°|
+| Options | Orientation                     |
+|---------|---------------------------------|
+| 1       | 0°                              |
+| 2       | horizontal flip                 |
+| 3       | 180°                            |
+| 4       | vertical flip                   |
+| 5       | clockwise 90° + horizontal flip |
+| 6       | clockwise 90°                   |
+| 7       | clockwise 90° + vertical flip   |
+| 8       | Counterclockwise 90°            |
 
 #### Returns:
 Promise that contains canvas object.
@@ -122,10 +138,10 @@ Promise that contains canvas object.
 Convert a dataURL string to a File(Blob) object. you can determine the type of the File object when transitioning.
 
 #### Parameters:
-| Name        | Type        | Attributes | Description |
-| ----------- | ----------- |---|----------- |
-| dataURL     | string      |   | a dataURL string|
-| type        | string     | optional |determine the converted image type;<br> the options are "image/png", "image/jpeg", "image/gif".|
+| Name    | Type   | Attributes | Description                                                                                     |
+|---------|--------|------------|-------------------------------------------------------------------------------------------------|
+| dataURL | string |            | a dataURL string                                                                                |
+| type    | string | optional   | determine the converted image type;<br> the options are "image/png", "image/jpeg", "image/gif". |
 
 #### Returns:
 Promise that contains a Blob object.
@@ -136,10 +152,10 @@ Promise that contains a Blob object.
 Compress a File(Blob) object.
 
 #### Parameters:
-| Name        | Type        | Description |
-| ----------- | ----------- |----------- |
-| file        | File(Blob)  |a File(Blob) object|
-| config      | number \| object |if number type, range 0-1, indicate the image quality; <br> if object type,you can pass parameters to the `imagetoCanvas` and `dataURLtoFile` method;<br> Reference is as follow:|
+| Name   | Type             | Description                                                                                                                                                                       |
+|--------|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| file   | File(Blob)       | a File(Blob) object                                                                                                                                                               |
+| config | number \| object | if number type, range 0-1, indicate the image quality; <br> if object type,you can pass parameters to the `imagetoCanvas` and `dataURLtoFile` method;<br> Reference is as follow: |
 
 #### Tips:
 
@@ -172,10 +188,10 @@ Promise that contains a Blob object.
 Compress a File(Blob) object based on size.
 
 #### Parameters:
-| Name        | Type        | Description |
-| ----------- | ----------- |----------- |
-| file        | File(Blob)  |a File(Blob) object|
-| config      | number \| object |if number type, specify the size of the compressed image(unit KB); <br> if object type,you can pass parameters to the `imagetoCanvas` and `dataURLtoFile` method;<br> Reference is as follow:|
+| Name   | Type             | Description                                                                                                                                                                                   |
+|--------|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| file   | File(Blob)       | a File(Blob) object                                                                                                                                                                           |
+| config | number \| object | if number type, specify the size of the compressed image(unit KB); <br> if object type,you can pass parameters to the `imagetoCanvas` and `dataURLtoFile` method;<br> Reference is as follow: |
 
 #### Tips:
 
@@ -210,11 +226,11 @@ Promise that contains a Blob object.
 Convert a Canvas object into a dataURL string, this method can be compressed.
 
 #### Parameters:
-| Name        | Type        | Attributes | Description |
-| ----------- | ----------- |---|----------- |
-| canvas      | canvas      |   | a Canvas object|
-| quality     | number     | optional |range 0-1, indicate the image quality, default 0.92|
-| type        | string     | optional |determine the converted image type;<br> the options are "image/png", "image/jpeg", "image/gif",default "image/jpeg"|
+| Name    | Type   | Attributes | Description                                                                                                         |
+|---------|--------|------------|---------------------------------------------------------------------------------------------------------------------|
+| canvas  | canvas |            | a Canvas object                                                                                                     |
+| quality | number | optional   | range 0-1, indicate the image quality, default 0.92                                                                 |
+| type    | string | optional   | determine the converted image type;<br> the options are "image/png", "image/jpeg", "image/gif",default "image/jpeg" |
 
 #### Returns:
 Promise that contains a dataURL string.
@@ -226,11 +242,11 @@ Promise that contains a dataURL string.
 Convert a Canvas object into a Blob object, this method can be compressed.
 
 #### Parameters:
-| Name        | Type        | Attributes | Description |
-| ----------- | ----------- |---|----------- |
-| canvas      | canvas      |   | a Canvas object|
-| quality     | number     | optional |range 0-1, indicate the image quality, default 0.92|
-| type        | string     | optional |determine the converted image type;<br> the options are "image/png", "image/jpeg", "image/gif",default "image/jpeg"|
+| Name    | Type   | Attributes | Description                                                                                                         |
+|---------|--------|------------|---------------------------------------------------------------------------------------------------------------------|
+| canvas  | canvas |            | a Canvas object                                                                                                     |
+| quality | number | optional   | range 0-1, indicate the image quality, default 0.92                                                                 |
+| type    | string | optional   | determine the converted image type;<br> the options are "image/png", "image/jpeg", "image/gif",default "image/jpeg" |
 
 #### Returns:
 Promise that contains a Blob object.
@@ -241,9 +257,9 @@ Promise that contains a Blob object.
 Convert a dataURL string to a image object.
 
 #### Parameters:
-| Name        | Type        | Description |
-| ----------- | ----------- |----------- |
-| dataURL     | string      | a dataURL string|
+| Name    | Type   | Description      |
+|---------|--------|------------------|
+| dataURL | string | a dataURL string |
 
 #### Returns:
 Promise that contains a Image object.
@@ -254,10 +270,10 @@ Promise that contains a Image object.
 Download the image to local.
 
 #### Parameters:
-| Name        | Type        | Attributes | Description |
-| ----------- | ----------- |---|----------- |
-| file     | File(Blob)      |   | a File(Blob) object|
-| fileName        | string   | optional | download file name, if none, timestamp named file|
+| Name     | Type       | Attributes | Description                                       |
+|----------|------------|------------|---------------------------------------------------|
+| file     | File(Blob) |            | a File(Blob) object                               |
+| fileName | string     | optional   | download file name, if none, timestamp named file |
 
 ### `filetoDataURL(file) → {Promise(string)}`
 
@@ -265,9 +281,9 @@ Download the image to local.
 Convert a File(Blob) object to a dataURL string.
 
 #### Parameters:
-| Name        | Type        | Description |
-| ----------- | ----------- |----------- |
-| file     | File(Blob)      | a File(Blob) object|
+| Name | Type       | Description         |
+|------|------------|---------------------|
+| file | File(Blob) | a File(Blob) object |
 
 #### Returns:
 Promise that contains a dataURL string.
@@ -278,9 +294,9 @@ Promise that contains a dataURL string.
 Load the required Blob object through the image url.
 
 #### Parameters:
-| Name        | Type        | Description |
-| ----------- | ----------- |----------- |
-| url         | string      | image url|
+| Name | Type   | Description |
+|------|--------|-------------|
+| url  | string | image url   |
 
 #### Returns:
 Promise that contains a Blob object.
@@ -291,9 +307,9 @@ Promise that contains a Blob object.
 Load the required Image object through the image url.
 
 #### Parameters:
-| Name        | Type        | Description |
-| ----------- | ----------- |----------- |
-| url         | string      | image url|
+| Name | Type   | Description |
+|------|--------|-------------|
+| url  | string | image url   |
 
 #### Returns:
 Promise that contains Image object.
