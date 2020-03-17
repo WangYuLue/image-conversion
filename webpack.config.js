@@ -7,6 +7,7 @@ module.exports = {
     filename: "conversion.js",
     path: path.resolve(__dirname, "build"),
     library: 'imageConversion',
+    globalObject: "this",
     libraryTarget: 'umd',
   },
   module: {
