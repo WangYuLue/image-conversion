@@ -28,7 +28,7 @@ import { EImageType, ICompressConfig, compressAccuratelyConfig } from '@models';
  *
  * @returns {Promise(Blob)}
  */
-async function compress(file: File, config: ICompressConfig = {}) {
+async function compress(file: File, config: ICompressConfig = {}): Promise<Blob> {
   if (!(file instanceof Blob)) {
     throw new Error('compress(): First arg must be a Blob object or a File object.');
   }
@@ -78,7 +78,7 @@ async function compress(file: File, config: ICompressConfig = {}) {
  *
  * @returns {Promise(Blob)}
  */
-async function compressAccurately(file: Blob, config: compressAccuratelyConfig = {}) {
+async function compressAccurately(file: Blob, config: compressAccuratelyConfig = {}): Promise<Blob> {
   if (!(file instanceof Blob)) {
     throw new Error('compressAccurately(): First arg must be a Blob object or a File object.');
   }
