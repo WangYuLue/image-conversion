@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/npm/l/image-conversion.svg)](https://www.npmjs.com/package/image-conversion)
 [![minified size](https://img.shields.io/bundlephobia/min/image-conversion.svg)](https://www.npmjs.com/package/image-conversion)
 
-> image-conversion is a simple and easy-to-use JS image convert tools, which provides many methods to convert between Image,Canvas,File and dataURL.
+> [image-conversion](https://github.com/WangYuLue/image-conversion) is a simple and easy-to-use JS image convert tools, which provides many methods to convert between Image,Canvas,File and dataURL.
 
 > In addition，image-conversion can specify size to compress the image ([test here](http://www.wangyulue.com/assets/image-comversion/example/index.html)).
 
