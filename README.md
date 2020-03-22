@@ -28,16 +28,17 @@ yarn add image-conversion
 ```
 ### Include the library
 
-browser import:
+in browser:
 ```html
 <script src="https://cdn.jsdelivr.net/gh/WangYuLue/image-conversion/build/conversion.js"></script>
 ```
-CommonJS import:
+
+in CommonJS:
 ```js
 const imageConversion = require("image-conversion")
 ```
 
-Amd import:
+in ES6:
 
 ```js
 import * as imageConversion from 'image-conversion';
