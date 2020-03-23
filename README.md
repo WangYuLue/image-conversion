@@ -8,7 +8,7 @@
 
 > [image-conversion](https://github.com/WangYuLue/image-conversion) is a simple and easy-to-use JS image convert tools, which provides many methods to convert between Image,Canvas,File and dataURL.
 
-> In addition，image-conversion can specify size to compress the image ([test here](http://www.wangyulue.com/assets/image-comversion/example/index.html)).
+> In addition，image-conversion can specify size to compress the image ([test here](https://demo.wangyulue.com/image-conversion/)).
 
 
 ## Methods Map
