@@ -5,19 +5,18 @@
   <meta charset="utf-8" />
   <title>Mocha Tests</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://unpkg.com/mocha/mocha.css" />
+  <link rel="stylesheet" href="../../node_modules/mocha/mocha.css" />
 </head>
 
 <body>
   <div id="mocha"></div>
 
-  <script src="https://unpkg.com/chai/chai.js"></script>
-  <script src="https://unpkg.com/mocha/mocha.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/WangYuLue/image-conversion/build/conversion.js"></script>
+  <script src="../../node_modules/chai/chai.js"></script>
+  <script src="../../node_modules/mocha/mocha.js"></script>
+  <script src="../../build/conversion.js"></script>
 
   <script class="mocha-init">
     mocha.setup('bdd');
-    mocha.checkLeaks();
     const assert = chai.assert;
     const expect = chai.expect;
     const {
@@ -33,6 +32,11 @@
       compress,
       compressAccurately
     } = imageConversion;
+    const EImageType = {
+      'PNG': 'image/png',
+      'JPEG': 'image/jpeg',
+      'GIF': 'image/gif'
+    }
   </script>
   <script src="./index.test.js"></script>
   <script class="mocha-exec">

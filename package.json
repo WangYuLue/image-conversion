@@ -1,6 +1,6 @@
 {
   "name": "image-conversion",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "A simple and easy-to-use JS image convert tools, which can specify size to compress the image.",
   "main": "index.js",
   "author": "wangyulue",
@@ -28,7 +28,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "test": "http-server . -o /test/unit/"
+    "test": "http-server . -o /__test__/unit/"
   },
   "husky": {
     "hooks": {

@@ -1,5 +1,4 @@
 import { EImageType } from '@models';
-import { checkImageType } from '@utils';
 
 /**
  * 将一个canvas对象转变为一个File（Blob）对象

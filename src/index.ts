@@ -52,6 +52,9 @@ async function compress(file: File, config: ICompressConfig = {}): Promise<Blob>
   const canvas = await imagetoCanvas(image, Object.assign({}, config));
   const compressDataURL = await canvastoDataURL(canvas, config.quality, mime);
   const compressFile = await dataURLtoFile(compressDataURL, originalMime);
+  if (compressFile.size > file.size) {
+    return file;
+  }
   return compressFile;
 };
 
