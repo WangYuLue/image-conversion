@@ -32,6 +32,11 @@
   dependencies:
     any-observable "^0.3.0"
 
+"@types/chai@^4.2.11":
+  version "4.2.11"
+  resolved "https://registry.npm.taobao.org/@types/chai/download/@types/chai-4.2.11.tgz#d3614d6c5f500142358e6ed24e1bf16657536c50"
+  integrity sha1-02FNbF9QAUI1jm7SThvxZldTbFA=
+
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/@types/color-name/download/@types/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -46,6 +51,11 @@
   version "7.0.4"
   resolved "https://registry.npm.taobao.org/@types/json-schema/download/@types/json-schema-7.0.4.tgz#38fd73ddfd9b55abb1e1b2ed578cb55bd7b7d339"
   integrity sha1-OP1z3f2bVaux4bLtV4y1W9e30zk=
+
+"@types/mocha@^7.0.2":
+  version "7.0.2"
+  resolved "https://registry.npm.taobao.org/@types/mocha/download/@types/mocha-7.0.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fmocha%2Fdownload%2F%40types%2Fmocha-7.0.2.tgz#b17f16cf933597e10d6d78eae3251e692ce8b0ce"
+  integrity sha1-sX8Wz5M1l+ENbXjq4yUeaSzosM4=
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"

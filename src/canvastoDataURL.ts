@@ -10,7 +10,7 @@ import { checkImageType } from '@utils';
  * @param {string=} type - 确定转换后的图片类型，选项有 "image/png", "image/jpeg", "image/gif",默认"image/jpeg"
  * @returns {Promise(string)} Promise含有一个dataURL字符串参数
  */
-export default async function canvastoDataURL(canvas: HTMLCanvasElement, quality: number, type: EImageType): Promise<string> {
+export default async function canvastoDataURL(canvas: HTMLCanvasElement, quality: number = 0.92, type: EImageType = EImageType.JPEG): Promise<string> {
   if (!checkImageType(type)) {
     type = EImageType.JPEG;
   }

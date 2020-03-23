@@ -1,6 +1,6 @@
 {
   "name": "image-conversion",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "description": "A simple and easy-to-use JS image convert tools, which can specify size to compress the image.",
   "main": "index.js",
   "author": "wangyulue",
@@ -28,7 +28,8 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "test": "http-server . -o /__test__/unit/"
+    "build:test": "webpack --config test/webpack.config.js",
+    "test": "yarn build:test && http-server . -o /test/unit/"
   },
   "husky": {
     "hooks": {
@@ -39,6 +40,8 @@
     "src/**/*.ts": "eslint"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
     "@typescript-eslint/eslint-plugin": "^2.23.0",
     "@typescript-eslint/parser": "^2.23.0",
     "chai": "^4.2.0",

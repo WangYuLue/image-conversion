@@ -177,3 +177,7 @@ export {
   compress,
   compressAccurately
 };
+
+export {
+  EImageType
+};

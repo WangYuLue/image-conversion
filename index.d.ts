@@ -1,21 +1,15 @@
-export = ImageConversion;
-export as namespace ImageConversion;
-
-declare namespace ImageConversion {
-  const canvastoDataURL: (canvas: HTMLCanvasElement, quality: number, type: EImageType) => Promise<string>;
-  const canvastoFile: (canvas: HTMLCanvasElement, quality: number, type: EImageType) => Promise<Blob>;
-  const dataURLtoFile: (dataURL: string, type: EImageType) => Promise<Blob>;
-  const dataURLtoImage: (dataURL: string) => Promise<HTMLImageElement>;
-  const downloadFile: (file: File, fileName: string) => void;
-  const filetoDataURL: (file: Blob) => Promise<string>;
-  const imagetoCanvas: (image: HTMLImageElement, config: Image2CanvasConfig) => Promise<HTMLCanvasElement>;
-  const urltoBlob: (url: string) => Promise<Blob>;
-  const urltoImage: (url: string) => Promise<HTMLImageElement>;
-  const compress: (file: File, config: ICompressConfig) => Promise<Blob>;
-  const compressAccurately: (file: Blob, config: compressAccuratelyConfig) => Promise<Blob>;
-}
-
-declare enum EImageType {
+export const canvastoDataURL: (canvas: HTMLCanvasElement, quality?: number, type?: EImageType) => Promise<string>;
+export const canvastoFile: (canvas: HTMLCanvasElement, quality?: number, type?: EImageType) => Promise<Blob>;
+export const dataURLtoFile: (dataURL: string, type?: EImageType) => Promise<Blob>;
+export const dataURLtoImage: (dataURL: string) => Promise<HTMLImageElement>;
+export const downloadFile: (file: Blob, fileName: string) => void;
+export const filetoDataURL: (file: Blob) => Promise<string>;
+export const imagetoCanvas: (image: HTMLImageElement, config?: Image2CanvasConfig) => Promise<HTMLCanvasElement>;
+export const urltoBlob: (url: string) => Promise<Blob>;
+export const urltoImage: (url: string) => Promise<HTMLImageElement>;
+export const compress: (file: Blob, config?: ICompressConfig | number) => Promise<Blob>;
+export const compressAccurately: (file: Blob, config?: compressAccuratelyConfig | number) => Promise<Blob>;
+export enum EImageType {
   'PNG' = 'image/png',
   'JPEG' = 'image/jpeg',
   'GIF' = 'image/gif'

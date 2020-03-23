@@ -1,11 +1,26 @@
-const isImage = (image) => image.tagName === 'IMG';
-const isCanvas = (canvas) => canvas.tagName === 'CANVAS';
-const isDataURL = (string) => string.startsWith('data:');
-const isFile = (file) => file.size > 0;
-const compressAccuratelySuccess = (file, size) => Math.abs(file.size / size - 1) < 0.05;
+import {
+  canvastoDataURL,
+  canvastoFile,
+  dataURLtoFile,
+  dataURLtoImage,
+  filetoDataURL,
+  imagetoCanvas,
+  urltoBlob,
+  urltoImage,
+  compress,
+  compressAccurately,
+  EImageType
+} from '../../index';
+import { expect } from 'chai';
+
+const isImage = (image: HTMLImageElement) => image.tagName === 'IMG';
+const isCanvas = (canvas: HTMLCanvasElement) => canvas.tagName === 'CANVAS';
+const isDataURL = (string: string) => string.startsWith('data:');
+const isFile = (file: Blob) => file.size > 0;
+const compressAccuratelySuccess = (file: Blob, size: number) => Math.abs(file.size / size - 1) < 0.05;
 
 describe('canvastoDataURL', function () {
-  let canvas;
+  let canvas: HTMLCanvasElement;
   beforeEach(function () {
     canvas = document.createElement('canvas');
     canvas.width = 1000;
@@ -24,9 +39,9 @@ describe('canvastoDataURL', function () {
     expect(dataURL.startsWith(`data:${EImageType.JPEG}`)).to.be.equal(true);
   });
   it('conversion to GIF', async () => {
-    // Warning: set gif but file type is jpeg
-    const dataURL = await canvastoDataURL(canvas, 1, EImageType.Gif);
-    expect(dataURL.startsWith(`data:${EImageType.JPEG}`)).to.be.equal(true);
+    // Warning: can't compress PNG picture
+    const dataURL = await canvastoDataURL(canvas, 1, EImageType.GIF);
+    expect(dataURL.startsWith(`data:${EImageType.PNG}`)).to.be.equal(true);
   });
   it('compress JPEG quality', async () => {
     const dataURL1 = await canvastoDataURL(canvas, 1, EImageType.JPEG);
@@ -48,7 +63,7 @@ describe('canvastoDataURL', function () {
 });
 
 describe('canvastoFile', function () {
-  let canvas;
+  let canvas: HTMLCanvasElement;
   beforeEach(function () {
     canvas = document.createElement('canvas');
     canvas.width = 1000;
@@ -91,7 +106,7 @@ describe('canvastoFile', function () {
 });
 
 describe('dataURLtoFile', function () {
-  let dataURL;
+  let dataURL: string;
   beforeEach(function () {
     dataURL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANRSURBVGhD7dlZqE1RHMfxa0ghhExRxkRIUkiGMmTIgyFTtxCZXkiSEIqSN0SRJA+SFA9CMhTxICFTUQqZJfM8+/6us2u17//cu9c5e917Zf/q073nnH3+a5+z917DPiVZsmSp9jRFvb///htphRnYjYt4i9+Ob7iNg1iK3qgxqYUxOIofcHc8iRtYgoaotgzCJVg76OsFFqEuqiwNsAO/YO1UMS6jG4KnPa7D2om0vMcEBEt3PILVeNp0vc1F6mmHh7AaDUWnbilSi66J0KdTPl/RD6lkO6xGZCaGYBUe557zpSO9EuoF5+Sec91DYxSVwcjXO6nLdKPRex1+ItrmEx7gau7vZ0SvaTtt7476GpfeINomsgkFR0UrGiduwcpUzEanskfl0wW6kKeUPSqfO4i39R1dUVDGIl7QdRchkq9T0dSnoGjaYRWMaO6U9kis08w9NV1f0AxeaQ0dTqugK7UeJZeBsNqJzINXNIu1Crmeog3SjMYrdSJWe3IYXtH5aBVyjUOIqBOw2pPXqI3E0XrCKhS5gFBRb3kNVrui+V7ixBdFcYsRMsthtSsjkSj6RqwCLo3CITMCVrsyHYnSBFYBV0+ETF9Y7UriWbEupsqWrUMRMqNgtSuTkTjPYRWJ6OZByKyG1a4MQ+LopoBVJBK616po2dALibMfVhHXJITILFjtyUd43SObD6uQS9Ntr28nQfpDO2u1J6fhlc6wCsW9xHikkWmobPxaA+/chFXMchLDUQc+0fajcQZWXZdmxVrLeEfL2HgxdctaR8efj2jCtxfLMABWNJhq5N4HHVGrjuU4Coouqidwi51Ac+x0nrNcQUtY6Qifox3RkSs4CxAvuAXKZsRfk1doi4qiU0Q34qz3W7TIKyrq00/BLaqbEX2g16wjswJJshbx91p0wyLf+t8rOhXi394uRNHPCT2gRZHugSWNjlq+Za1LZ0Vq0WzUvcj1wRqh2NyHu9Nx25B6dGPZnUwegs8RsHIe7o67DsC3O08cTUvcQesZ9mBjju9pcA7uzkfUkQT7EFH0+0W+SaV2zCfxD/IBC1Fl0U9l6xHvBIr5IMfQAdUS3Q7ainco5IOcxRGoM6kRqY+J2FD2KHla5P5myZIly3+VkpI/CXqqzeTbW68AAAAASUVORK5CYII=';
   });
@@ -118,7 +133,7 @@ describe('dataURLtoFile', function () {
 });
 
 describe('dataURLtoImage', function () {
-  let dataURL;
+  let dataURL: string;
   beforeEach(function () {
     dataURL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANRSURBVGhD7dlZqE1RHMfxa0ghhExRxkRIUkiGMmTIgyFTtxCZXkiSEIqSN0SRJA+SFA9CMhTxICFTUQqZJfM8+/6us2u17//cu9c5e917Zf/q073nnH3+a5+z917DPiVZsmSp9jRFvb///htphRnYjYt4i9+Ob7iNg1iK3qgxqYUxOIofcHc8iRtYgoaotgzCJVg76OsFFqEuqiwNsAO/YO1UMS6jG4KnPa7D2om0vMcEBEt3PILVeNp0vc1F6mmHh7AaDUWnbilSi66J0KdTPl/RD6lkO6xGZCaGYBUe557zpSO9EuoF5+Sec91DYxSVwcjXO6nLdKPRex1+ItrmEx7gau7vZ0SvaTtt7476GpfeINomsgkFR0UrGiduwcpUzEanskfl0wW6kKeUPSqfO4i39R1dUVDGIl7QdRchkq9T0dSnoGjaYRWMaO6U9kis08w9NV1f0AxeaQ0dTqugK7UeJZeBsNqJzINXNIu1Crmeog3SjMYrdSJWe3IYXtH5aBVyjUOIqBOw2pPXqI3E0XrCKhS5gFBRb3kNVrui+V7ixBdFcYsRMsthtSsjkSj6RqwCLo3CITMCVrsyHYnSBFYBV0+ETF9Y7UriWbEupsqWrUMRMqNgtSuTkTjPYRWJ6OZByKyG1a4MQ+LopoBVJBK616po2dALibMfVhHXJITILFjtyUd43SObD6uQS9Ntr28nQfpDO2u1J6fhlc6wCsW9xHikkWmobPxaA+/chFXMchLDUQc+0fajcQZWXZdmxVrLeEfL2HgxdctaR8efj2jCtxfLMABWNJhq5N4HHVGrjuU4Coouqidwi51Ac+x0nrNcQUtY6Qifox3RkSs4CxAvuAXKZsRfk1doi4qiU0Q34qz3W7TIKyrq00/BLaqbEX2g16wjswJJshbx91p0wyLf+t8rOhXi394uRNHPCT2gRZHugSWNjlq+Za1LZ0Vq0WzUvcj1wRqh2NyHu9Nx25B6dGPZnUwegs8RsHIe7o67DsC3O08cTUvcQesZ9mBjju9pcA7uzkfUkQT7EFH0+0W+SaV2zCfxD/IBC1Fl0U9l6xHvBIr5IMfQAdUS3Q7ainco5IOcxRGoM6kRqY+J2FD2KHla5P5myZIly3+VkpI/CXqqzeTbW68AAAAASUVORK5CYII=';
   });
@@ -142,7 +157,7 @@ describe('filetoDataURL', function () {
 });
 
 describe('imagetoCanvas', function () {
-  let image;
+  let image: HTMLImageElement;
   beforeEach(async function () {
     image = await urltoImage('../images/demo.png');
   });

@@ -9,6 +9,6 @@ import { EImageType } from '@models';
  * @param {string=} type - 确定转换后的图片类型，选项有 "image/png", "image/jpeg", "image/gif",默认"image/jpeg"
  * @returns {Promise(Blob)}
  */
-export default function canvastoFile(canvas: HTMLCanvasElement, quality: number, type: EImageType = EImageType.JPEG): Promise<Blob> {
+export default function canvastoFile(canvas: HTMLCanvasElement, quality: number = 0.92, type: EImageType = EImageType.JPEG): Promise<Blob> {
   return new Promise(resolve => canvas.toBlob(blob => resolve(blob), type, quality));
 };
