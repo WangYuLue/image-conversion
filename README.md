@@ -315,6 +315,10 @@ Load the required Image object through the image url.
 #### Returns:
 Promise that contains Image object.
 
+## Compatibility
+
+image-conversion depend native `Promise` and `Fetch` function, Therefore IE 11 is not supported. Other old browser version，check [Promise](https://caniuse.com/#search=Promise) and [fetch](https://caniuse.com/#search=fetch) support.
+
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
