@@ -35,7 +35,7 @@ in browser:
 
 in CommonJS:
 ```js
-const imageConversion = require("image-conversion")
+const imageConversion = require("image-conversion");
 ```
 
 in ES6:
