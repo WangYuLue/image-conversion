@@ -53,6 +53,11 @@ export default async function imagetoCanvas(image: HTMLImageElement, config: Ima
     cvs.height = height;
     cvs.width = width;
   }
+  // 为防止png出现难看的黑色底，先画一层白底
+  if(config.fill){
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, width, height);
+  }
   // 设置方向
   switch (myConfig.orientation) {
     case 3:
