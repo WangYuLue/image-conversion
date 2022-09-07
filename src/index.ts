@@ -48,6 +48,7 @@ async function compress(file: File, config: ICompressConfig = {}): Promise<Blob>
     mime = config.type;
     originalMime = config.type;
   }
+  config.fill = mime == EImageType.JPEG;
   const image = await dataURLtoImage(dataURL);
   const canvas = await imagetoCanvas(image, Object.assign({}, config));
   const compressDataURL = await canvastoDataURL(canvas, config.quality, mime);
@@ -117,6 +118,7 @@ async function compressAccurately(file: Blob, config: compressAccuratelyConfig =
     mime = config.type;
     originalMime = config.type;
   }
+  config.fill = mime == EImageType.JPEG;
   const image = await dataURLtoImage(dataURL);
   const canvas = await imagetoCanvas(image, Object.assign({}, config));
   /**
